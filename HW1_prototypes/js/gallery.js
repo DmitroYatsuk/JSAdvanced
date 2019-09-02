@@ -1,6 +1,8 @@
 /* 
 *  Схематическое изображение класса Галереи
 */
+const dropdownName = document.getElementById("dropdown-name"),
+	  dropdownDate = document.getElementById("dropdown-date");
 
 let BaseGallery = function () {	
     // code
