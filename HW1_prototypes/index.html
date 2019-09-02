@@ -16,14 +16,14 @@
     <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
       <h5 class="my-0 mr-md-auto font-weight-normal">JSExpert</h5>
       <nav class="my-2 my-md-0 mr-md-3">
-        <a class="p-2 text-dark" href="#">Галлерея</a>
-        <a class="p-2 text-dark" href="#">О пользователе</a>
+        <a id="gallary" class="p-2 text-dark" href="#">Галлерея</a>
+        <a id="about-user" class="p-2 text-dark" href="#">О пользователе</a>
       </nav>
-      <a class="btn btn-outline-primary" href="#">Выход</a>
+      <a id="sign-out" class="btn btn-outline-primary" href="#">Выход</a>
     </div>
 
     <main class="text-center" role="main">
-        <div class="alert alert-danger" role="alert">
+        <div id="alert" class="alert alert-danger hide" role="alert">
             This is a danger alert—check it out!
         </div>
         <form class="form-signin">
@@ -35,8 +35,8 @@
             <label for="inputPassword" class="sr-only">Пароль</label>
             <input type="text" id="inputPassword" class="form-control" placeholder="Password" required="" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAAPhJREFUOBHlU70KgzAQPlMhEvoQTg6OPoOjT+JWOnRqkUKHgqWP4OQbOPokTk6OTkVULNSLVc62oJmbIdzd95NcuGjX2/3YVI/Ts+t0WLE2ut5xsQ0O+90F6UxFjAI8qNcEGONia08e6MNONYwCS7EQAizLmtGUDEzTBNd1fxsYhjEBnHPQNG3KKTYV34F8ec/zwHEciOMYyrIE3/ehKAqIoggo9inGXKmFXwbyBkmSQJqmUNe15IRhCG3byphitm1/eUzDM4qR0TTNjEixGdAnSi3keS5vSk2UDKqqgizLqB4YzvassiKhGtZ/jDMtLOnHz7TE+yf8BaDZXA509yeBAAAAAElFTkSuQmCC&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%;" autocomplete="off">
             <div class="mb-3"></div>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
-            <p class="mt-5 mb-3 text-muted">© 2017-2018</p>
+            <button id="submit" class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
+            <p class="mt-5 mb-3 text-muted">© 2019</p>
         </form>
     </main>
 
@@ -155,7 +155,7 @@
 		</div>
 	  </div></div></div>      
           <div class="text-center">
-            <a href="#" id="next-page" class="btn btn-primary my-2">Добавить картинку</a>
+            <a href="#" id="addThumb" class="btn btn-primary my-2">Добавить картинку</a>
           </div>
           
         </div>
