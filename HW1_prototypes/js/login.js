@@ -1,19 +1,18 @@
-const loginInput = document.getElementById("inputEmail"),
-	passwordInput = document.getElementById("inputPassword"),
-	alert = document.getElementById("alert"),
-	submitBtn = document.getElementById("submit"),
-	formSignin = document.getElementById("form"),
-	userData = document.getElementById("userData"),
-	userLogin = document.getElementById("userLogin"),
-	userPassword = document.getElementById("userPassword"),
-	showPwdBtn = document.getElementById("showPwd"),
-	homeBtn = document.getElementById("home");
-
-
 let LoginForm = function (validatorModule, galleryModule) {
 	this.validator = validatorModule;
 	this.gallery = galleryModule;
 
+    const loginInput = document.getElementById("inputEmail"),
+        passwordInput = document.getElementById("inputPassword"),
+        alert = document.getElementById("alert"),
+        submitBtn = document.getElementById("submit"),
+        formSignin = document.getElementById("form"),
+        userData = document.getElementById("userData"),
+        userLogin = document.getElementById("userLogin"),
+        userPassword = document.getElementById("userPassword"),
+        showPwdBtn = document.getElementById("showPwd"),
+        homeBtn = document.getElementById("home");
+    
 	let loginData = {
 		login: "",
 		password: ""
@@ -45,28 +44,7 @@ let LoginForm = function (validatorModule, galleryModule) {
         name.classList.add("show");
     }
 
-    function inputFormValidation(login, pwd) {
-        if (login !== "" && pwd !== "") {
-            hideAlert();
-            if (validateEmail(login)) {
-                if (localStorage['login'] === login && localStorage['pwd'] === pwd) {
-                    hideClass(formSignin);
-                    userLogin.value = login;
-                    userPassword.value = pwd;
-                    showClass(userData);
-                }
-                else {
-                    showAlert("Wrong credentials!");
-                }
-            }
-            else {
-                showAlert("Wrong login format!");
-            }
-        }
-        else {
-            showAlert("Login and password shouldn't be empty!");.
-        }
-    }
+    
 
     let submitHandler = function (e) {
         e.preventDefault();
