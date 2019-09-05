@@ -1,6 +1,6 @@
 'use strict';
-let Validator = function () {
-    
+let Validator = function (loginData) {
+    this.loginData = loginData;
 }
 
 Validator.prototype = {

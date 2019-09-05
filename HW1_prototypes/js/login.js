@@ -15,12 +15,12 @@ let LoginForm = function (validatorModule, galleryModule, locators) {
 LoginForm.prototype = {
 
     initComponent: function () {
-        this.locators.submitBtn.addEventListener("click", this.submitHandler);
+        this.locators.submitBtn.addEventListener("click", this.submitHandler.bind(this));
         //this.locators.showPwdBtn.addEventListener("click", this.showPwdHandler);
         //this.locators.homeBtn.addEventListener("click", this.homeBtnHandler);
     },
     validateUserData: function () {
-        this.validator.isValid();
+        this.validator.isValid(this.locators.loginInput.value, this.locators.passwordInput.value);
     },
 
     showGallery: function () {
@@ -33,14 +33,15 @@ LoginForm.prototype = {
     },
 
     showAlert: function (msg) {
-        alert.innerText = msg;
-        alert.classList.remove("hide");
-        alert.classList.add("show");
+        this.locators.alert.innerText = msg;
+        this.locators.alert.classList.remove("hide");
+        this.locators.alert.classList.add("show");
     },
 
-    hideAlert: function () {
-        alert.classList.remove("show");
-        alert.classList.add("hide");
+    hideAlert: function (msg) {
+        this.locators.alert.innerText = "";
+        this.locators.alert.classList.remove("show");
+        this.locators.alert.classList.add("hide");
     },
 
     hideClass: function (name) {
@@ -55,7 +56,11 @@ LoginForm.prototype = {
 
     submitHandler: function (e) {
         e.preventDefault();
-        validatorModule.isTrue( locators.loginInput.value,  locators.passwordInput.value);
+        let retVal = this.validator.isTrue(this.locators.loginInput.value, this.locators.passwordInput.value);
+        if (retVal.status === true) {
+            this.hideAlert();
+        }
+        else this.showAlert(retVal.msg);
     },
 
     showPwdHandler: function (e) {
