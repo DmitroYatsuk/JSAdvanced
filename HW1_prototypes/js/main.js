@@ -1,9 +1,10 @@
 'use strict';
-const galleryElemLocators = {
+const galleryLocators = {
+    galleryView : document.getElementById("gallery-view"),
     dropdownName : document.getElementById("dropdown-name"),
     dropdownDate : document.getElementById("dropdown-date"),
     addBtn : document.getElementById("add"),
-    result : document.getElementById("result"),
+    result : document.getElementById("gallery"),
     filter : document.getElementById("filter-selector"),
     count : document.getElementById("count"),
     arrToDisplay : []
@@ -27,8 +28,10 @@ const userInfoLocators = {
 
 let validatorModule = new Validator();
 
-let galleryModule = new BaseGallery();
+let galleryModule = new BaseGallery(galleryLocators);
 //let galleryModule = new ExtendedGallery();
 
 let loginForm = new LoginForm(validatorModule, galleryModule, loginFormLocators);
+
 loginForm.initComponent();
+galleryModule.initComponent();
