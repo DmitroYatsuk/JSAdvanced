@@ -5,9 +5,12 @@ const galleryLocators = {
     dropdownDate : document.getElementById("dropdown-date"),
     addBtn : document.getElementById("add"),
     result : document.getElementById("gallery"),
-    filter : document.getElementById("filter-selector"),
-    count : document.getElementById("count"),
-    arrToDisplay : []
+    filterOne : document.getElementById("dropdown-1"),
+    filterTwo : document.getElementById("dropdown-2"),
+    filterThree : document.getElementById("dropdown-3"),
+    filterFour : document.getElementById("dropdown-4"),
+    //count : document.getElementById("count"),
+    //arrToDisplay : []
 };
 
 const loginFormLocators = {
@@ -15,10 +18,11 @@ const loginFormLocators = {
     passwordInput : document.getElementById("inputPassword"),
     alert : document.getElementById("alert"),
     submitBtn : document.getElementById("submit"),
+    formSignin : document.getElementById("form-view")
 };
 
 const userInfoLocators = {
-    formSignin : document.getElementById("form"),
+    
     userData : document.getElementById("userData"),
     userLogin : document.getElementById("userLogin"),
     userPassword : document.getElementById("userPassword"),
@@ -34,4 +38,3 @@ let galleryModule = new BaseGallery(galleryLocators);
 let loginForm = new LoginForm(validatorModule, galleryModule, loginFormLocators);
 
 loginForm.initComponent();
-galleryModule.initComponent();
