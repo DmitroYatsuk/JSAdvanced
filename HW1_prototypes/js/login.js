@@ -60,8 +60,10 @@ LoginForm.prototype = {
         let retVal = this.validator.isTrue(this.locators.loginInput.value, this.locators.passwordInput.value);
         if (retVal.status === true) {
             this.hideAlert();
-            let preparedData = this.gallery.prepareSourceData();
-            //this.gallery.initComponent();
+            this.hideClass(this.locators.formSignin);
+            //let preparedData = this.gallery.prepareSourceData();
+            this.gallery.initComponent();
+            this.showClass(this.gallery.locators.galleryView);
         }
         else this.showAlert(retVal.msg);
     },
