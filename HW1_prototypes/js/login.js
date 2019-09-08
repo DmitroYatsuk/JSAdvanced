@@ -1,7 +1,8 @@
 'use strict';
-let LoginForm = function (validatorModule, galleryModule, locators) {
+let LoginForm = function (validatorModule, galleryModule, userModule, locators) {
     this.validator = validatorModule;
     this.gallery = galleryModule;
+    this.user = userModule;
     this.locators = locators;
 
     let loginData = {
@@ -16,8 +17,7 @@ LoginForm.prototype = {
 
     initComponent: function () {
         this.locators.submitBtn.addEventListener("click", this.submitHandler.bind(this));
-        //this.locators.showPwdBtn.addEventListener("click", this.showPwdHandler);
-        //this.locators.homeBtn.addEventListener("click", this.homeBtnHandler);
+        this.locators.homeBtn.addEventListener("click", this.homeBtnHandler.bind(this));
     },
     validateUserData: function () {
         this.validator.isValid(this.locators.loginInput.value, this.locators.passwordInput.value);
@@ -68,17 +68,10 @@ LoginForm.prototype = {
         else this.showAlert(retVal.msg);
     },
 
-    showPwdHandler: function (e) {
-        userPassword.type = userPassword.type === 'password'
-            ? 'text' : 'password';
-        e.target.innerText = e.target.innerText === "Show password"
-            ? 'Hide password' : 'Show password';
-    },
-
     homeBtnHandler: function () {
-        loginInput.value = "";
-        passwordInput.value = "";
-        showClass(formSignin);
-        hideClass(userData);
+        this.locators.loginInput.value = "";
+        this.locators.passwordInput.value = "";
+        this.showClass(this.locators.formSignin);
+        this.hideClass(this.locators.userData);
     }
 }

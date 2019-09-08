@@ -8,9 +8,7 @@ const galleryLocators = {
     filterOne : document.getElementById("dropdown-1"),
     filterTwo : document.getElementById("dropdown-2"),
     filterThree : document.getElementById("dropdown-3"),
-    filterFour : document.getElementById("dropdown-4"),
-    //count : document.getElementById("count"),
-    //arrToDisplay : []
+    filterFour : document.getElementById("dropdown-4")
 };
 
 const loginFormLocators = {
@@ -18,23 +16,22 @@ const loginFormLocators = {
     passwordInput : document.getElementById("inputPassword"),
     alert : document.getElementById("alert"),
     submitBtn : document.getElementById("submit"),
-    formSignin : document.getElementById("form-view")
+    formSignin : document.getElementById("form-view"),
+    homeBtn : document.getElementById("sign-out")
 };
 
-const userInfoLocators = {
-    
+const userLocators = {
     userData : document.getElementById("userData"),
     userLogin : document.getElementById("userLogin"),
     userPassword : document.getElementById("userPassword"),
-    showPwdBtn : document.getElementById("showPwd"),
-    homeBtn : document.getElementById("home")
+    showPwdBtn : document.getElementById("showPwd")
 };
 
 let validatorModule = new Validator();
-
+let userModule = new userForm(userLocators);
 let galleryModule = new BaseGallery(galleryLocators);
 //let galleryModule = new ExtendedGallery();
 
-let loginForm = new LoginForm(validatorModule, galleryModule, loginFormLocators);
+let loginForm = new LoginForm(validatorModule, galleryModule, userModule, loginFormLocators);
 
 loginForm.initComponent();
