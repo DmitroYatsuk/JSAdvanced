@@ -61,8 +61,8 @@ LoginForm.prototype = {
         if (retVal.status === true) {
             this.hideAlert();
             this.hideClass(this.locators.formSignin);
-            //let preparedData = this.gallery.prepareSourceData();
             this.gallery.initComponent();
+            this.user.initComponent();
             this.showClass(this.gallery.locators.galleryView);
         }
         else this.showAlert(retVal.msg);

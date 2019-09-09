@@ -4,9 +4,10 @@ let userForm = function (locators) {
 }
 
 userForm.prototype = {
+
     initComponent: function () {
         this.locators.galleryBtn.addEventListener("click", this.goToGalleryHandler);
-        this.locators.galleryBtn.addEventListener("click", this.goToUserHandler);
+        this.locators.aboutUserBtn.addEventListener("click", this.goToUserHandler);
         this.locators.showPwdBtn.addEventListener("click", this.showPwdHandler);
     },
 
@@ -18,12 +19,12 @@ userForm.prototype = {
     },
 
     goToGalleryHandler: function (e) {
-        loginForm.hideClass(this.locators.userData);
-        loginForm.showClass(gallery.locators.galleryView);
+        loginForm.hideClass(this.userData);
+        loginForm.showClass(galleryModule.locators.galleryView);
     },
 
     goToUserHandler: function (e) {
-        loginForm.hideClass(this.locators.userData);
-        loginForm.showClass(this.locators.userData);
+        loginForm.hideClass(this.locators.galleryBtn);
+        loginForm.showClass(this.userData);
     }
 }
