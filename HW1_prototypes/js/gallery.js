@@ -25,7 +25,7 @@ BaseGallery.prototype = {
 
 	showResult: function () {
 		let resultHTML = "";
-		this.arrToDisplay.forEach(function (car) {
+		this.arrToDisplay.forEach(function (car, idx) {
 			resultHTML += `
 							<div class="col-md-4">
 								<div class="card mb-4 box-shadow">
@@ -34,13 +34,14 @@ BaseGallery.prototype = {
 									src="${car.url}" data-holder-rendered="true"
 									style="height: 225px; width: 100%; display: block;">
 								<div class="card-body">
+									<p class="card-text">${car.name}</p>
 									<p class="card-text">${car.description}</p>
 									<div class="d-flex justify-content-between align-items-center">
 									<div class="btn-group">
 										<button type="button" class="btn btn-outline-secondary">View</button>
 										<button type="button" class="btn btn-outline-secondary">Edit</button>
 									</div>
-									<a href="#" id="remove-counter" class="btn btn-danger">Удалить</a>
+									<a href="#" class="btn btn-danger" data-rm-btn="${idx}">Удалить</a>
 									<small class="text-muted">${car.date}</small>
 									</div>
 								</div>
@@ -49,7 +50,6 @@ BaseGallery.prototype = {
 		}
 		)
 		this.locators.result.innerHTML = resultHTML;
-		//count.innerHTML = this.counter;
 	},
 
 	addElement: function (mappedArr) {
@@ -69,9 +69,9 @@ BaseGallery.prototype = {
 		this.addElement(this.prepareSourceData());
 	},
 
-	removeElement: function (idxToDel) {
+	removeElement: function (mappedArr, idx) {
 		if (this.counter >= 0) {
-			this.arrToDisplay.splice(idxToDel, 1);
+			this.arrToDisplay.splice(idx, 1);
 			if (this.counter < mappedArr.length - 1) {
 				this.locators.addBtn.style.backgroundColor = "white";
 			}
@@ -82,13 +82,8 @@ BaseGallery.prototype = {
 	},
 
 	removeBtnHandler: function (e) {
-		if (e.target.localName === "button") {
-			let target = e.target.parentElement.previousElementSibling;
-			let curSrc = target.currentSrc;
-			let idx = arrToDisplay.findIndex(item => item.url === curSrc);
-			this.removeElement(idx);
-			e.stopImmediatePropagation();
-		}
+		this.removeElement(this.prepareSourceData(), e.target.attributes["data-rm-btn"].nodeValue);
+		e.stopImmediatePropagation();
 	},
 
 	filterThumbnails: function (filterValue) {
@@ -125,7 +120,7 @@ BaseGallery.prototype = {
 			return "dropdown-1";
 		}
 		else return filterValue;
-			
+
 	},
 
 	prepareSourceData: function () {

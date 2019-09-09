@@ -45,56 +45,65 @@
   </main>
 
   <main id="gallery-view" class="hide" role="main">
-      <section class="jumbotron text-center">
-          <div class="container">
-          <h1 class="jumbotron-heading">Автомобильная галлерея</h1>
-          <p class="lead text-muted">На этой странице вы можете увидеть отличную галлерею, которая дает вам возможность
-            ознакомится с нашим каталогом транспортных средств. </p>
-          <div class="row">
-            <div class="col-md-6">
-      
+    <section class="jumbotron text-center">
+      <div class="container">
+        <h1 class="jumbotron-heading">Автомобильная галлерея</h1>
+        <p class="lead text-muted">На этой странице вы можете увидеть отличную галлерею, которая дает вам возможность
+          ознакомится с нашим каталогом транспортных средств. </p>
+        <div class="row">
+          <div class="col-md-6">
+
             <div class="btn-group" id="dropdown-name">
               <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-              aria-expanded="false">
-              Фильтровать по имени
+                aria-expanded="false">
+                Фильтровать по имени
               </button>
               <div class="dropdown-menu">
-              <a id="dropdown-1" class="dropdown-item" data-name="a-z" href="#" >Вперед: от А до Я</a>
-              <a id="dropdown-2" class="dropdown-item" data-name="z-a" href="#">Назад: от Я до А</a>
+                <a id="dropdown-1" class="dropdown-item" data-name="a-z" href="#">Вперед: от А до Я</a>
+                <a id="dropdown-2" class="dropdown-item" data-name="z-a" href="#">Назад: от Я до А</a>
               </div>
             </div>
-            </div>
-      
-            <div class="col-md-5">
+          </div>
+
+          <div class="col-md-5">
             <div class="btn-group" id="dropdown-date">
               <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
-              aria-haspopup="true" aria-expanded="false">
-              Фильтровать по дате
+                aria-haspopup="true" aria-expanded="false">
+                Фильтровать по дате
               </button>
               <div class="dropdown-menu">
-              <a id="dropdown-3" class="dropdown-item" date-type="new" href="#">Сначала новые</a>
-              <a id="dropdown-4" class="dropdown-item" date-type="old" href="#">Сначала старые</a>
+                <a id="dropdown-3" class="dropdown-item" date-type="new" href="#">Сначала новые</a>
+                <a id="dropdown-4" class="dropdown-item" date-type="old" href="#">Сначала старые</a>
               </div>
             </div>
-            </div>
-      
-      
           </div>
-      
-          </div>
-          </section>
-        
-          <div></div>
-        
-          <div class="album py-5 bg-light">
-              <div class="container">
-              <div id="gallery" class="row">
-              </div>
-              <div class="text-center">
-                <a href="#" id="add" class="btn btn-primary my-2">Добавить картинку</a>
-              </div>
-            </div>
-          </div>`;
+        </div>
+      </div>
+    </section>
+    <div></div>
+    <div class="album py-5 bg-light">
+      <div class="container">
+        <div id="gallery" class="row">
+        </div>
+        <div class="text-center">
+          <a href="#" id="add" class="btn btn-primary my-2">Добавить картинку</a>
+        </div>
+      </div>
+    </div>;
+
+    <div id="userData" class="hide">
+      <div>
+        <h1 class="h3 mb-3 font-weight-normal">User information:</h1>
+        <label for="userLogin">User login</label>
+        <input type="text" id="userLogin">
+      </div>
+      <div>
+        <label for="userPassword">User password</label>
+        <input type="password" id="userPassword">
+        <button class="btn btn-default" id="showPwd">Show password</button>
+      </div>
+      <button class="btn btn-default" id="home">Back</button>
+    </div>
   </main>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
@@ -107,12 +116,8 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
-  <script src=js/user.js></script>  
-  <script src=js/validator.js></script>
-  <script src=js/data.js></script>
-  <script src=js/gallery.js></script>
-  <script src=js/login.js></script>
-  <script src=js/main.js></script>
-  <!-- <script src=js/service.js></script> -->
+  <script src=js/user.js> </script> <script src=js/validator.js> </script> <script src=js/data.js> </script> <script
+    src=js/gallery.js> </script> <script src=js/login.js> </script> <script src=js/main.js> </script> <!-- <script
+    src=js/service.js> </script> -->
 </body>
 </html>

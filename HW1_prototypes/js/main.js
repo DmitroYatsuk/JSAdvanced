@@ -4,6 +4,7 @@ const galleryLocators = {
     dropdownName : document.getElementById("dropdown-name"),
     dropdownDate : document.getElementById("dropdown-date"),
     addBtn : document.getElementById("add"),
+    rmBtns : document.getElementsByClassName("btn btn-danger"),
     result : document.getElementById("gallery"),
     filterOne : document.getElementById("dropdown-1"),
     filterTwo : document.getElementById("dropdown-2"),
@@ -24,7 +25,9 @@ const userLocators = {
     userData : document.getElementById("userData"),
     userLogin : document.getElementById("userLogin"),
     userPassword : document.getElementById("userPassword"),
-    showPwdBtn : document.getElementById("showPwd")
+    showPwdBtn : document.getElementById("showPwd"),
+    galleryBtn : document.getElementById("gallary"),
+    aboutUserBtn : document.getElementById("about-user")
 };
 
 let validatorModule = new Validator();
