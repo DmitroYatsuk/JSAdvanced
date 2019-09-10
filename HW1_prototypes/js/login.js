@@ -5,20 +5,18 @@ let LoginForm = function (validatorModule, galleryModule, userModule, locators) 
     this.user = userModule;
     this.locators = locators;
 
-    let loginData = {
-        login: "",
-        password: ""
-    };
 }
-
-
 
 LoginForm.prototype = {
 
     initComponent: function () {
         this.locators.submitBtn.addEventListener("click", this.submitHandler.bind(this));
         this.locators.homeBtn.addEventListener("click", this.homeBtnHandler.bind(this));
+        this.locators.galleryBtn.addEventListener("click", this.goToGalleryHandler.bind(this));
+        this.locators.aboutUserBtn.addEventListener("click", this.goToUserHandler.bind(this));
+        this.locators.rememberMe.addEventListener("click", this.remMeHandler.bind(this));
     },
+
     validateUserData: function () {
         this.validator.isValid(this.locators.loginInput.value, this.locators.passwordInput.value);
     },
@@ -55,8 +53,8 @@ LoginForm.prototype = {
     },
 
     submitHandler: function (e) {
-		e.preventDefault();
-		this.setLogAndPass("my@mail.com", "1234");
+        e.preventDefault();
+        this.setLogAndPass("my@mail.com", "1234");
         let retVal = this.validator.isTrue(this.locators.loginInput.value, this.locators.passwordInput.value);
         if (retVal.status === true) {
             this.hideAlert();
@@ -73,5 +71,23 @@ LoginForm.prototype = {
         this.locators.passwordInput.value = "";
         this.showClass(this.locators.formSignin);
         this.hideClass(this.locators.userData);
+    },
+
+    goToGalleryHandler: function (e) {
+        this.hideClass(this.locators.userData);
+        this.showClass(this.gallery.locators.galleryView);
+    },
+
+    goToUserHandler: function (e) {
+        this.hideClass(this.gallery.locators.galleryView);
+        this.showClass(this.locators.userData);
+    },
+
+    remMeHandler: function (e) {
+        if (e.target.checked === true) {
+            localStorage.setItem('remMe', true);
+        }
+        else localStorage.setItem('remMe', false);
     }
+
 }
