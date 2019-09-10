@@ -38,7 +38,11 @@
       <input type="text" id="inputPassword" class="form-control" placeholder="Password" required=""
         style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAAPhJREFUOBHlU70KgzAQPlMhEvoQTg6OPoOjT+JWOnRqkUKHgqWP4OQbOPokTk6OTkVULNSLVc62oJmbIdzd95NcuGjX2/3YVI/Ts+t0WLE2ut5xsQ0O+90F6UxFjAI8qNcEGONia08e6MNONYwCS7EQAizLmtGUDEzTBNd1fxsYhjEBnHPQNG3KKTYV34F8ec/zwHEciOMYyrIE3/ehKAqIoggo9inGXKmFXwbyBkmSQJqmUNe15IRhCG3byphitm1/eUzDM4qR0TTNjEixGdAnSi3keS5vSk2UDKqqgizLqB4YzvassiKhGtZ/jDMtLOnHz7TE+yf8BaDZXA509yeBAAAAAElFTkSuQmCC&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%;"
         autocomplete="off" value="1234">
-      <div class="mb-3"></div>
+      <div class="checkbox mb-3">
+        <label>
+          <input id="checkbox" type="checkbox" value="remember-me"> Remember me
+        </label>
+      </div>
       <button id="submit" class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
       <p class="mt-5 mb-3 text-muted">© 2019</p>
     </form>
@@ -92,19 +96,19 @@
     </div>
   </main>
   <main>
-    <div id="userData" class="hide">
+    <form id="userData" class="form-user-data hide">
       <div>
         <h1 class="h3 mb-3 font-weight-normal">User information:</h1>
         <label for="userLogin">User login</label>
-        <input type="text" id="userLogin">
+        <input type="text" id="userLogin" class="form-control">
       </div>
       <div>
         <label for="userPassword">User password</label>
-        <input type="password" id="userPassword">
-        <button class="btn btn-default" id="showPwd">Show password</button>
+        <input type="password" id="userPassword" class="form-control">
+        <div class="mb-3"></div>
+        <button class="btn btn-lg btn-primary btn-block" id="showPwd">Show password</button>
       </div>
-      <!-- <button class="btn btn-default" id="home">Back</button> -->
-    </div>
+    </form>
   </main>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
