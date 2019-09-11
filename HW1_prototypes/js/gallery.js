@@ -2,7 +2,6 @@
 let BaseGallery = function (locators) {
 	this.locators = locators;
 	this.counter = 0;
-	//this.mappedArr = [];
 	this.arrToDisplay = [];
 }
 
@@ -65,9 +64,9 @@ BaseGallery.prototype = {
 		else $("#myModal").modal();
 	},
 
-	addBtnHandler: function (e) {
-		this.addElement(this.prepareSourceData());
-	},
+	 	addBtnHandler: function (e) {
+			this.addElement(this.prepareSourceData());
+		},
 
 	removeElement: function (mappedArr, idx) {
 		if (this.counter >= 0) {
@@ -149,7 +148,17 @@ BaseGallery.prototype = {
 	}
 }
 
+function inheritance(parent, child) {
+	let tempChild = child.prototype;
+	child.prototype = Object.create(parent.prototype);
+	child.prototype.constructor = child;
 
+	for (let key in tempChild) {
+		if (tempChild.hasOwnProperty(key)) {
+			child.prototype[key] = tempChild[key];
+		}
+	}
+}
 
 /* let ExtendedGallery = function () {
 	BaseGallery.apply(this);
@@ -161,11 +170,13 @@ ExtendedGallery.prototype = {
 		BaseGallery.prototype.initListeners.apply(this);
 	},
 
-	addImage: function () {
-		// новый метод которо нет у родителя
+	addBtnHandler: function (e) {
+		this.addElement(this.prepareSourceData());
 	}
 }
 
 // код функции наследования можно найти архиве, который содержится
 // в материалах к сессии 29 (практический пример)
-service.inheritance(BaseGallery, ExtendedGallery); */
+inheritance(BaseGallery, ExtendedGallery);
+const extendedGallery = new ExtendedGallery();
+extendedGallery.initListeners(); */
