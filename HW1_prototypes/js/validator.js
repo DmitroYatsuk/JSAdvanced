@@ -12,14 +12,17 @@ Validator.prototype = {
     isTrue: function (login, pwd) {
         if (login !== "" || pwd !== "") {
             if (this.validateEmail(login)) {
-                if (localStorage.getItem('login') === login && localStorage.getItem('pwd') === pwd) {
-                    return { status: true, msg: "Login has been done!" }
+                if (pwd.length >= 8) {
+                    if (localStorage.getItem('login') === login && localStorage.getItem('pwd') === pwd) {
+                        return { status: true, msg: "Login has been done!" };
+                    }
+                    else return { status: false, msg: "Wrong credentials!" };
                 }
-                else return { status: false, msg: "Wrong credentials!" }
+                else return { status: false, msg: "Password is too short!" };
             }
-            else return { status: false, msg: "Wrong login format!" }
+            else return { status: false, msg: "Wrong login format!" };
         }
-        else return { status: false, msg: "Login and password shouldn't be empty!" }
+        else return { status: false, msg: "Login and password shouldn't be empty!" };
     }
 }
 
