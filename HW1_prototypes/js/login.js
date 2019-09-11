@@ -4,25 +4,22 @@ let LoginForm = function (validatorModule, galleryModule, userModule, locators) 
     this.gallery = galleryModule;
     this.user = userModule;
     this.locators = locators;
-
 }
 
 LoginForm.prototype = {
 
     initComponent: function () {
         this.locators.submitBtn.addEventListener("click", this.submitHandler.bind(this));
-        this.locators.homeBtn.addEventListener("click", this.homeBtnHandler.bind(this));
+        this.locators.quitBtn.addEventListener("click", this.quitBtnHandler.bind(this));
         this.locators.galleryBtn.addEventListener("click", this.goToGalleryHandler.bind(this));
         this.locators.aboutUserBtn.addEventListener("click", this.goToUserHandler.bind(this));
-        this.locators.rememberMe.addEventListener("click", this.remMeHandler.bind(this));
-    },
-
-    validateUserData: function () {
-        this.validator.isValid(this.locators.loginInput.value, this.locators.passwordInput.value);
-    },
-
-    showGallery: function () {
-        this.gallery.init();
+        //this.locators.rememberMe.addEventListener("click", this.remMeHandler.bind(this));
+        if (this.isLoggedIn() === "true") {
+            this.showGallery();
+        }
+        if (this.isRememberMe() === "true") {
+            this.showGallery();
+        }
     },
 
     setLogAndPass: function (login, pwd) {
@@ -52,25 +49,53 @@ LoginForm.prototype = {
         name.classList.add("show");
     },
 
+    setLoggedIn: function (value) {
+        sessionStorage.setItem('loggedIn', value);
+    },
+
+    isLoggedIn: function () {
+        return sessionStorage.getItem('loggedIn');
+    },
+
+    setRememberMe: function (value) {
+        localStorage.setItem('remMe', value);
+    },
+
+    isRememberMe: function () {
+        return localStorage.getItem('remMe');
+    },
+
+    showGallery: function () {
+        this.hideAlert();
+        this.hideClass(this.locators.formSignin);
+        this.gallery.initComponent();
+        this.user.initComponent();
+        this.showClass(this.gallery.locators.galleryView);
+    },
+
     submitHandler: function (e) {
         e.preventDefault();
-        this.setLogAndPass("my@mail.com", "1234");
+        this.setLogAndPass("my@mail.com", "12345678");
         let retVal = this.validator.isTrue(this.locators.loginInput.value, this.locators.passwordInput.value);
         if (retVal.status === true) {
-            this.hideAlert();
-            this.hideClass(this.locators.formSignin);
-            this.gallery.initComponent();
-            this.user.initComponent();
-            this.showClass(this.gallery.locators.galleryView);
+            this.setLoggedIn(true);
+            if (this.locators.rememberMe.checked === true) {
+                this.setRememberMe(true);
+            }
+            else this.setRememberMe(false);
+            this.showGallery();
         }
         else this.showAlert(retVal.msg);
     },
 
-    homeBtnHandler: function () {
+    quitBtnHandler: function () {
         this.locators.loginInput.value = "";
         this.locators.passwordInput.value = "";
         this.showClass(this.locators.formSignin);
         this.hideClass(this.locators.userData);
+        this.hideClass(this.gallery.locators.galleryView);
+        this.setLoggedIn(false);
+        this.setRememberMe(false);        
     },
 
     goToGalleryHandler: function (e) {
@@ -80,14 +105,18 @@ LoginForm.prototype = {
 
     goToUserHandler: function (e) {
         this.hideClass(this.gallery.locators.galleryView);
+        this.locators.userLogin.value = localStorage.getItem('login');
+        this.locators.userPassword.value = localStorage.getItem('pwd');
         this.showClass(this.locators.userData);
     },
 
-    remMeHandler: function (e) {
+/*     remMeHandler: function (e) {
         if (e.target.checked === true) {
-            localStorage.setItem('remMe', true);
+            this.setRememberMe(true);
         }
-        else localStorage.setItem('remMe', false);
-    }
+        else this.setRememberMe(false);
+    } */
 
 }
+
+
