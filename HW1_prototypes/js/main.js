@@ -19,15 +19,15 @@ const loginLocators = {
     rememberMe : document.getElementById("checkbox"),
     submitBtn : document.getElementById("submit"),
     formSignin : document.getElementById("form-view"),
-    homeBtn : document.getElementById("sign-out"),
+    quitBtn : document.getElementById("sign-out"),
     userData : document.getElementById("userData"),
+    userLogin : document.getElementById("userLogin"),//
+    userPassword : document.getElementById("userPassword"),//
     galleryBtn : document.getElementById("gallary"),
     aboutUserBtn : document.getElementById("about-user")
 };
 
 const userLocators = {
-    userLogin : document.getElementById("userLogin"),
-    userPassword : document.getElementById("userPassword"),
     showPwdBtn : document.getElementById("showPwd")
 };
 
