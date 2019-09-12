@@ -36,6 +36,6 @@ let userModule = new userForm(userLocators);
 let galleryModule = new BaseGallery(galleryLocators);
 //let galleryModule = new ExtendedGallery();
 
-let loginForm = new LoginForm(validatorModule, galleryModule, userModule, loginLocators);
+let loginForm = new LoginForm({login:"my@mail.com", pwd:"12345678"}, validatorModule, galleryModule, userModule, loginLocators);
 
 loginForm.initComponent();

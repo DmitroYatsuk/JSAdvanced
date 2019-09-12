@@ -1,6 +1,6 @@
 'use strict';
 let Validator = function (loginData) {
-    this.loginData = loginData;
+    //this.loginData = loginData;
 }
 
 Validator.prototype = {
@@ -13,7 +13,8 @@ Validator.prototype = {
         if (login !== "" || pwd !== "") {
             if (this.validateEmail(login)) {
                 if (pwd.length >= 8) {
-                    if (localStorage.getItem('login') === login && localStorage.getItem('pwd') === pwd) {
+                    //if (localStorage.getItem('login') === login && localStorage.getItem('pwd') === pwd) {
+                    if (loginForm.loginPwd.login === login && loginForm.loginPwd.pwd === pwd) {
                         return { status: true, msg: "Login has been done!" };
                     }
                     else return { status: false, msg: "Wrong credentials!" };

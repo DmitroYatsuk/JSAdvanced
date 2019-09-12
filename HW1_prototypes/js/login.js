@@ -1,9 +1,10 @@
 'use strict';
-let LoginForm = function (validatorModule, galleryModule, userModule, locators) {
+let LoginForm = function (loginPwd, validatorModule, galleryModule, userModule, locators) {
     this.validator = validatorModule;
     this.gallery = galleryModule;
     this.user = userModule;
     this.locators = locators;
+    this.loginPwd = loginPwd;
 }
 
 LoginForm.prototype = {
@@ -22,10 +23,10 @@ LoginForm.prototype = {
         }
     },
 
-    setLogAndPass: function (login, pwd) {
-        localStorage.setItem('login', login);
-        localStorage.setItem('pwd', pwd);
-    },
+    /*     setLogAndPass: function (login, pwd) {
+            localStorage.setItem('login', login);
+            localStorage.setItem('pwd', pwd);
+        }, */
 
     showAlert: function (msg) {
         this.locators.alert.innerText = msg;
@@ -75,7 +76,7 @@ LoginForm.prototype = {
 
     submitHandler: function (e) {
         e.preventDefault();
-        this.setLogAndPass("my@mail.com", "12345678");
+        //this.setLogAndPass("my@mail.com", "12345678");
         let retVal = this.validator.isTrue(this.locators.loginInput.value, this.locators.passwordInput.value);
         if (retVal.status === true) {
             this.setLoggedIn(true);
@@ -95,7 +96,7 @@ LoginForm.prototype = {
         this.hideClass(this.locators.userData);
         this.hideClass(this.gallery.locators.galleryView);
         this.setLoggedIn(false);
-        this.setRememberMe(false);        
+        this.setRememberMe(false);
     },
 
     goToGalleryHandler: function (e) {
@@ -105,17 +106,19 @@ LoginForm.prototype = {
 
     goToUserHandler: function (e) {
         this.hideClass(this.gallery.locators.galleryView);
-        this.locators.userLogin.value = localStorage.getItem('login');
-        this.locators.userPassword.value = localStorage.getItem('pwd');
+        /*         this.locators.userLogin.value = localStorage.getItem('login');
+                this.locators.userPassword.value = localStorage.getItem('pwd'); */
+        this.locators.userLogin.value = this.loginPwd.login;
+        this.locators.userPassword.value = this.loginPwd.pwd;
         this.showClass(this.locators.userData);
     },
 
-/*     remMeHandler: function (e) {
-        if (e.target.checked === true) {
-            this.setRememberMe(true);
-        }
-        else this.setRememberMe(false);
-    } */
+    /*     remMeHandler: function (e) {
+            if (e.target.checked === true) {
+                this.setRememberMe(true);
+            }
+            else this.setRememberMe(false);
+        } */
 
 }
 
