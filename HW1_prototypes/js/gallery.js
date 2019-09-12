@@ -64,9 +64,9 @@ BaseGallery.prototype = {
 		else $("#myModal").modal();
 	},
 
-	 	addBtnHandler: function (e) {
+/* 	 	addBtnHandler: function (e) {
 			this.addElement(this.prepareSourceData());
-		},
+		}, */
 
 	removeElement: function (mappedArr, idx) {
 		if (this.counter >= 0) {
@@ -81,6 +81,7 @@ BaseGallery.prototype = {
 	},
 
 	removeBtnHandler: function (e) {
+//ToDo: return pattern
 		this.removeElement(this.prepareSourceData(), e.target.attributes["data-rm-btn"].nodeValue);
 		e.stopImmediatePropagation();
 	},
@@ -90,16 +91,16 @@ BaseGallery.prototype = {
 		switch (filterValue) {
 			case "dropdown-1":
 				this.arrToDisplay.sort((a, b) => a.name.localeCompare(b.name));
-				break;
+				return;
 			case "dropdown-2":
 				this.arrToDisplay.sort((a, b) => b.name.localeCompare(a.name));
-				break;
+				return;
 			case "dropdown-3":
 				this.arrToDisplay.sort((a, b) => b.date.localeCompare(a.date));
-				break;
+				return;
 			case "dropdown-4":
 				this.arrToDisplay.sort((a, b) => a.date.localeCompare(b.date));
-				break;
+				return;
 		}
 	},
 
@@ -160,7 +161,7 @@ function inheritance(parent, child) {
 	}
 }
 
-/* let ExtendedGallery = function () {
+ let ExtendedGallery = function () {
 	BaseGallery.apply(this);
 	this.property = {};
 }
@@ -171,12 +172,10 @@ ExtendedGallery.prototype = {
 	},
 
 	addBtnHandler: function (e) {
-		this.addElement(this.prepareSourceData());
+		BaseGallery.prototype.addElement(BaseGallery.prototype.prepareSourceData());
 	}
 }
 
-// код функции наследования можно найти архиве, который содержится
-// в материалах к сессии 29 (практический пример)
 inheritance(BaseGallery, ExtendedGallery);
 const extendedGallery = new ExtendedGallery();
-extendedGallery.initListeners(); */
+extendedGallery.initListeners(); 

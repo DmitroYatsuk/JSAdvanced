@@ -5,28 +5,26 @@ let LoginForm = function (loginPwd, validatorModule, galleryModule, userModule, 
     this.user = userModule;
     this.locators = locators;
     this.loginPwd = loginPwd;
-}
 
-LoginForm.prototype = {
-
-    initComponent: function () {
+    this.initComponent = function () {
+        //ToDo new fn
         this.locators.submitBtn.addEventListener("click", this.submitHandler.bind(this));
         this.locators.quitBtn.addEventListener("click", this.quitBtnHandler.bind(this));
         this.locators.galleryBtn.addEventListener("click", this.goToGalleryHandler.bind(this));
         this.locators.aboutUserBtn.addEventListener("click", this.goToUserHandler.bind(this));
-        //this.locators.rememberMe.addEventListener("click", this.remMeHandler.bind(this));
+        //
+        //Fn
         if (this.isLoggedIn() === "true") {
             this.showGallery();
         }
         if (this.isRememberMe() === "true") {
             this.showGallery();
         }
-    },
+        //
+    }
+}
 
-    /*     setLogAndPass: function (login, pwd) {
-            localStorage.setItem('login', login);
-            localStorage.setItem('pwd', pwd);
-        }, */
+LoginForm.prototype = {
 
     showAlert: function (msg) {
         this.locators.alert.innerText = msg;
@@ -49,7 +47,7 @@ LoginForm.prototype = {
         name.classList.remove("hide");
         name.classList.add("show");
     },
-
+////////////////
     setLoggedIn: function (value) {
         sessionStorage.setItem('loggedIn', value);
     },
@@ -65,7 +63,7 @@ LoginForm.prototype = {
     isRememberMe: function () {
         return localStorage.getItem('remMe');
     },
-
+////////////
     showGallery: function () {
         this.hideAlert();
         this.hideClass(this.locators.formSignin);
@@ -76,7 +74,6 @@ LoginForm.prototype = {
 
     submitHandler: function (e) {
         e.preventDefault();
-        //this.setLogAndPass("my@mail.com", "12345678");
         let retVal = this.validator.isTrue(this.locators.loginInput.value, this.locators.passwordInput.value);
         if (retVal.status === true) {
             this.setLoggedIn(true);
