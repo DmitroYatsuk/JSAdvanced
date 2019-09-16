@@ -53,7 +53,7 @@
 		// checkboxes.forEach(function(item){
 		// 	selectAll.checked ? item.checked = true: item.checked = true;
 		// });
-		checkboxes.forEach(item => selectAll.checked ? item.checked = true : item.checked = false);
+		checkboxes.forEach(item => item.checked = selectAll.checked ? true : false);
 	}
 
 	function selectTableLine(event) {

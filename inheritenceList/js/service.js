@@ -1,48 +1,48 @@
 
-var listService = (function(){
+var listService = (function () {
 
 	function duplicateArray(arr, count) {
-			let res = [];
-			for (let i=0; i<=count; i++){
-					res = res.concat(arr.map(a => Object.assign({}, a)))
-			}
-			return res;
+		let res = [];
+		for (let i = 0; i <= count; i++) {
+			res = res.concat(arr.map(a => Object.assign({}, a)))
+		}
+		return res;
 	}
 
-	function hideElements(elementArray){
-		elementArray.forEach(function(element){
+	function hideElements(elementArray) {
+		elementArray.forEach(function (element) {
 			element.classList.add("hide");
 		})
 	}
 
-	function showElements(elementArray){
-		elementArray.forEach(function(element){
+	function showElements(elementArray) {
+		elementArray.forEach(function (element) {
 			element.classList.remove("hide");
 		})
 	}
 
 	function sortEmailAsc(a, b) {
-			return a.email > b.email ? 1 : -1;
+		return a.email > b.email ? 1 : -1;
 	}
 
-  function sortEmailDesc(a, b) {
-        return a.email < b.email ? 1 : -1;;
+	function sortEmailDesc(a, b) {
+		return a.email < b.email ? 1 : -1;;
 	}
-	
-	function filterAdminRole(item){
+
+	function filterAdminRole(item) {
 		return item.role == "Admin";
 	}
 
-	function filterUserRole(item){
+	function filterUserRole(item) {
 		return item.role == "User";
 	}
 
-	function initTooltip(){
+	function initTooltip() {
 		$('[data-toggle="tooltip"]').tooltip();
 	}
 
-	function tableTemplate (item) {
-		return 	`<tr>
+	function tableTemplate(item) {
+		return `<tr>
 		<th scope="row">
 		  <input type="checkbox">
 		</th>
@@ -61,8 +61,8 @@ var listService = (function(){
 	  </tr>`;
 	};
 
-	function detailsTemplate (item) {
-		return 	`<form class="needs-validation" novalidate="">
+	function detailsTemplate(item) {
+		return `<form class="needs-validation" novalidate="">
 		<div class="row">
 		  <div class="col-md-6 mb-3">
 			<label for="firstName">Имя</label>
@@ -101,7 +101,7 @@ var listService = (function(){
 		let tempChild = child.prototype;
 		child.prototype = Object.create(parent.prototype);
 		child.prototype.constructor = child;
-	
+
 		for (let key in tempChild) {
 			if (tempChild.hasOwnProperty(key)) {
 				child.prototype[key] = tempChild[key];
@@ -109,19 +109,19 @@ var listService = (function(){
 		}
 	}
 
-    return {
-      duplicateArray: duplicateArray,
-			sortEmailAsc: sortEmailAsc,
-			sortEmailDesc: sortEmailDesc,
-			filterAdminRole: filterAdminRole,
-			filterUserRole: filterUserRole,
-			hideElements: hideElements,
-			showElements: showElements,
-			tableTemplate: tableTemplate,
-			detailsTemplate: detailsTemplate,
-			initTooltip: initTooltip,
-			inheritance: inheritance
-    }
+	return {
+		duplicateArray: duplicateArray,
+		sortEmailAsc: sortEmailAsc,
+		sortEmailDesc: sortEmailDesc,
+		filterAdminRole: filterAdminRole,
+		filterUserRole: filterUserRole,
+		hideElements: hideElements,
+		showElements: showElements,
+		tableTemplate: tableTemplate,
+		detailsTemplate: detailsTemplate,
+		initTooltip: initTooltip,
+		inheritance: inheritance
+	}
 }());
 
 
