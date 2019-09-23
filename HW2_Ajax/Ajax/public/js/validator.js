@@ -1,15 +1,12 @@
 'use strict';
-let Validator = function (loginData) {
-    //this.loginData = loginData;
-}
+class Validator {
 
-Validator.prototype = {
-    validateEmail: function (email) {
+    validateEmail (email) {
         var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(email);
-    },
+    }
 
-    isTrue: function (login, pwd) {
+    isTrue (login, pwd) {
         if (login !== "" || pwd !== "") {
             if (this.validateEmail(login)) {
                 if (pwd.length >= 8) {
