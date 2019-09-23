@@ -58,7 +58,7 @@ LoginForm.prototype = {
         this.hideAlert();
         this.hideClass(this.locators.formSignin);
         this.gallery.initListeners();
-        this.user.initListeners();
+        this.user.initComponent();
         this.showClass(this.gallery.locators.galleryView);
     },
 
