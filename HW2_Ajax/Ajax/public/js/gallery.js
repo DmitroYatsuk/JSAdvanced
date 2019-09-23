@@ -1,27 +1,26 @@
 'use strict';
-let BaseGallery = function (locators) {
-	this.locators = locators;
-	this.counter = 0;
-	this.arrToDisplay = [];
-}
+class BaseGallery {
+	constructor(locators) {
+		this.locators = locators;
+		this.counter = 0;
+		this.arrToDisplay = [];
+	}
 
-BaseGallery.prototype = {
-
-	initListeners: function () {
+	initListeners() {
 		this.locators.addBtn.addEventListener("click", this.addBtnHandler.bind(this));
 		this.locators.filterOne.addEventListener("click", this.filterHandler.bind(this));
 		this.locators.filterTwo.addEventListener("click", this.filterHandler.bind(this));
 		this.locators.filterThree.addEventListener("click", this.filterHandler.bind(this));
 		this.locators.filterFour.addEventListener("click", this.filterHandler.bind(this));
-	},
+	}
 
-	shrinkString: function (str) {
+	shrinkString(str) {
 		return (str.length >= 15)
 			? str.substring(0, 15) + "..."
 			: str;
-	},
+	}
 
-	showResult: function () {
+	showResult() {
 		let resultHTML = "";
 		this.arrToDisplay.forEach(function (car, idx) {
 			resultHTML += `
@@ -48,9 +47,9 @@ BaseGallery.prototype = {
 		}
 		)
 		this.locators.result.innerHTML = resultHTML;
-	},
+	}
 
-	addElement: function (mappedArr) {
+	addElement(mappedArr) {
 		if (this.counter < mappedArr.length) {
 			this.arrToDisplay.push(mappedArr[this.counter]);
 			if (this.counter === mappedArr.length - 1) {
@@ -61,13 +60,13 @@ BaseGallery.prototype = {
 			this.showResult();
 		}
 		else $("#myModal").modal();
-	},
+	}
 
-	addBtnHandler: function (e) {
+	addBtnHandler(e) {
 		this.addElement(BaseGallery.prototype.prepareSourceData());
-	},
+	}
 
-	filterThumbnails: function (filterValue) {
+	filterThumbnails(filterValue) {
 		this.setFilterType(filterValue);
 		switch (filterValue) {
 			case "dropdown-1":
@@ -83,18 +82,18 @@ BaseGallery.prototype = {
 				this.arrToDisplay.sort((a, b) => a.date.localeCompare(b.date));
 				return;
 		}
-	},
+	}
 
-	filterHandler: function (e) {
+	filterHandler(e) {
 		this.filterThumbnails(e.target.id);
 		this.showResult();
-	},
+	}
 
-	setFilterType: function (filterValue) {
+	setFilterType(filterValue) {
 		localStorage.setItem('filter', filterValue);
-	},
+	}
 
-	getFilterType: function () {
+	getFilterType() {
 		let filterValue = localStorage.getItem('filter');
 		if (filterValue === null) {
 			this.setFilterType("dropdown-1");
@@ -102,9 +101,9 @@ BaseGallery.prototype = {
 		}
 		else return filterValue;
 
-	},
+	}
 
-	prepareSourceData: function () {
+	prepareSourceData() {
 		let copiedData = data.slice();
 
 		let newArr = [];
@@ -132,31 +131,20 @@ BaseGallery.prototype = {
 
 
 //--------------Inheritance------------------------------------
-  function inheritance(parent, child) {
-	let tempChild = child.prototype;
-	child.prototype = Object.create(parent.prototype);
-	child.prototype.constructor = child;
 
-	for (let key in tempChild) {
-		if (tempChild.hasOwnProperty(key)) {
-			child.prototype[key] = tempChild[key];
-		}
+class ExtendedGallery extends BaseGallery {
+	constructor(locators) {
+		super(locators);
+		this.locators = locators;
+		this.property = {};
 	}
-}
 
- let ExtendedGallery = function (locators) {
-	BaseGallery.apply(this);
-	this.locators = locators;
-	this.property = {};
-}
-ExtendedGallery.prototype = {
-
-	initListeners: function () {
-		BaseGallery.prototype.initListeners.apply(this);
+	initListeners() {
+		super.initListeners();
 		this.locators.result.addEventListener("click", this.removeBtnHandler.bind(this));
-	},
+	}
 
-	removeElement: function (mappedArr, idx) {
+	removeElement(mappedArr, idx) {
 		if (this.counter >= 0) {
 			this.arrToDisplay.splice(idx, 1);
 			if (this.counter < mappedArr.length - 1) {
@@ -166,12 +154,10 @@ ExtendedGallery.prototype = {
 			this.filterThumbnails(this.getFilterType());
 			this.showResult();
 		}
-	},
+	}
 
-	removeBtnHandler: function (e) {
+	removeBtnHandler(e) {
 		this.removeElement(this.prepareSourceData(), e.target.attributes["data-rm-btn"].nodeValue);
 	}
 }
-
-inheritance(BaseGallery, ExtendedGallery);
 
