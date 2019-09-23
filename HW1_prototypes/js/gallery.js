@@ -7,9 +7,8 @@ let BaseGallery = function (locators) {
 
 BaseGallery.prototype = {
 
-	initComponent: function () {
+	initListeners: function () {
 		this.locators.addBtn.addEventListener("click", this.addBtnHandler.bind(this));
-		this.locators.result.addEventListener("click", this.removeBtnHandler.bind(this));
 		this.locators.filterOne.addEventListener("click", this.filterHandler.bind(this));
 		this.locators.filterTwo.addEventListener("click", this.filterHandler.bind(this));
 		this.locators.filterThree.addEventListener("click", this.filterHandler.bind(this));
@@ -64,26 +63,8 @@ BaseGallery.prototype = {
 		else $("#myModal").modal();
 	},
 
-/* 	 	addBtnHandler: function (e) {
-			this.addElement(this.prepareSourceData());
-		}, */
-
-	removeElement: function (mappedArr, idx) {
-		if (this.counter >= 0) {
-			this.arrToDisplay.splice(idx, 1);
-			if (this.counter < mappedArr.length - 1) {
-				this.locators.addBtn.style.backgroundColor = "white";
-			}
-			this.counter -= 1;
-			this.filterThumbnails(this.getFilterType());
-			this.showResult();
-		}
-	},
-
-	removeBtnHandler: function (e) {
-//ToDo: return pattern
-		this.removeElement(this.prepareSourceData(), e.target.attributes["data-rm-btn"].nodeValue);
-		e.stopImmediatePropagation();
+	addBtnHandler: function (e) {
+		this.addElement(BaseGallery.prototype.prepareSourceData());
 	},
 
 	filterThumbnails: function (filterValue) {
@@ -149,7 +130,9 @@ BaseGallery.prototype = {
 	}
 }
 
-function inheritance(parent, child) {
+
+//--------------Inheritance------------------------------------
+  function inheritance(parent, child) {
 	let tempChild = child.prototype;
 	child.prototype = Object.create(parent.prototype);
 	child.prototype.constructor = child;
@@ -161,21 +144,34 @@ function inheritance(parent, child) {
 	}
 }
 
- let ExtendedGallery = function () {
+ let ExtendedGallery = function (locators) {
 	BaseGallery.apply(this);
+	this.locators = locators;
 	this.property = {};
 }
 ExtendedGallery.prototype = {
 
 	initListeners: function () {
 		BaseGallery.prototype.initListeners.apply(this);
+		this.locators.result.addEventListener("click", this.removeBtnHandler.bind(this));
 	},
 
-	addBtnHandler: function (e) {
-		BaseGallery.prototype.addElement(BaseGallery.prototype.prepareSourceData());
+	removeElement: function (mappedArr, idx) {
+		if (this.counter >= 0) {
+			this.arrToDisplay.splice(idx, 1);
+			if (this.counter < mappedArr.length - 1) {
+				this.locators.addBtn.style.backgroundColor = "white";
+			}
+			this.counter -= 1;
+			this.filterThumbnails(this.getFilterType());
+			this.showResult();
+		}
+	},
+
+	removeBtnHandler: function (e) {
+		this.removeElement(this.prepareSourceData(), e.target.attributes["data-rm-btn"].nodeValue);
 	}
 }
 
 inheritance(BaseGallery, ExtendedGallery);
-const extendedGallery = new ExtendedGallery();
-extendedGallery.initListeners(); 
+
