@@ -147,8 +147,8 @@ class ExtendedGallery extends BaseGallery {
 	removeElement(mappedArr, idx) {
 		if (this.counter >= 0) {
 			this.arrToDisplay.splice(idx, 1);
-			if (this.counter < mappedArr.length - 1) {
-				this.locators.addBtn.style.backgroundColor = "white";
+			if (this.counter <= mappedArr.length) {
+				this.locators.addBtn.style.backgroundColor = "";
 			}
 			this.counter -= 1;
 			this.filterThumbnails(this.getFilterType());
