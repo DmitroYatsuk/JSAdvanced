@@ -112,7 +112,7 @@
     }
   ],
   "user": {
-    "login": "admin",
+    "login": "my@mail.com",
     "password": "12345678"
   }
 }
