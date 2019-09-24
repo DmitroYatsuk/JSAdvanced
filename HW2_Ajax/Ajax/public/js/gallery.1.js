@@ -5,29 +5,33 @@
 class BaseGallery {
 	constructor() {
 		this.list = [];
+		this.initComponent();
+/* 		console.log("list: ");
+		console.table(this.list); */
 	}
 
-	 initComponent (){
-		fetch("http://localhost:3000/cars").then(responce => responce.json())
-            .then(data => {
-				console.log(data);
+	initComponent() {
+		fetch("http://localhost:3000/cars").then(response => response.json())
+			.then(data => {
+				console.log("data: ");
+				console.table(data);
 				this.saveData(data);
-                //return data;
-            })   
+				//return data;
+			})
+			.then(() => {
+				console.log("list: ");
+				console.table(this.list);
+			})
 	}
-	saveData (data) {
+
+	saveData(data) {
 		this.list = data;
 	}
 
-	updateItem () {
-		fetch("http://localhost:3000/cars/5", options).then(responce => responce.json())
-            .then(data => {
+	updateItem() {
+		fetch("http://localhost:3000/cars/5", options).then(response => response.json())
+			.then(data => {
 				this.initComponent();
-            })
-
+			})
 	}
 }
-
-this.initComponent();
-	
-console.log(list);

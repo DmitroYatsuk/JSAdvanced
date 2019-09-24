@@ -105,18 +105,40 @@ class BaseGallery {
 
 	}
 
-	getData() {
+	prepareSourceData() {
 		fetch("http://localhost:3000/cars")
 			.then(response => {
-				console.log(response.headers.get('Content-Type'));
-				console.log(response.status);
-				console.log(response.url);
+				//console.log(response.headers.get('Content-Type'));
+				//console.log(response.status);
+				//console.log(response.url);
 				return response.json();
 			})
 			.then(data => {
-				console.log(data);
+				//console.table(data);
 				this.saveData(data);
 				return data;
+			})
+			.then(data => {
+				//console.table(data);
+				let newArr = [];
+				data.forEach(item => {
+					newArr.push({
+						url: item.url,
+						name: item.name,
+						description: item.description,
+						date: item.date,
+					})
+				})
+
+				let mappedArr = newArr.map(item => {
+					return {
+						url: `http://${item.url}`,
+						name: item.name.charAt(0).toLocaleUpperCase() + `${item.name}`.slice(1).toLowerCase(),
+						description: this.shrinkString(item.description),
+						date: moment(item.date).format("YYYY/MM/DD HH:mm"),
+					}
+				})
+				return mappedArr;
 			})
 	}
 
@@ -131,31 +153,31 @@ class BaseGallery {
 			})
 	}
 
-	async prepareSourceData() {
-		let copiedData = this.getData();
-		console.log("copiedData: " + copiedData);
-		console.log("list: " + this.list);
-		let newArr = [];
-		await copiedData.forEach(item => {
-			newArr.push({
-				url: item.url,
-				name: item.name,
-				description: item.description,
-				date: item.date,
+	/* 	prepareSourceData() {
+			let copiedData = this.getData();
+			console.log("copiedData: " + copiedData);
+			console.log("list: " + this.list);
+			let newArr = [];
+			await copiedData.forEach(item => {
+				newArr.push({
+					url: item.url,
+					name: item.name,
+					description: item.description,
+					date: item.date,
+				})
 			})
-		})
-
-		let mappedArr = newArr.map(item => {
-			return {
-				url: `http://${item.url}`,
-				name: item.name.charAt(0).toLocaleUpperCase() + `${item.name}`.slice(1).toLowerCase(),
-				description: this.shrinkString(item.description),
-				date: moment(item.date).format("YYYY/MM/DD HH:mm"),
-			}
-		})
-
-		return mappedArr;
-	}
+	
+			let mappedArr = newArr.map(item => {
+				return {
+					url: `http://${item.url}`,
+					name: item.name.charAt(0).toLocaleUpperCase() + `${item.name}`.slice(1).toLowerCase(),
+					description: this.shrinkString(item.description),
+					date: moment(item.date).format("YYYY/MM/DD HH:mm"),
+				}
+			})
+	
+			return mappedArr;
+		} */
 }
 
 
