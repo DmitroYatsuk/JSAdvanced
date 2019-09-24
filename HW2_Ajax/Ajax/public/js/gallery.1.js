@@ -2,25 +2,24 @@
 *  Схематическое изображение класса Галереи
 */
 
-let BaseGallery = function () {	
-	this.initComponent();
-	this.list = null;
-}
+class BaseGallery {
+	constructor() {
+		this.list = [];
+	}
 
-BaseGallery.prototype = {
-	initComponent : function (){
+	 initComponent (){
 		fetch("http://localhost:3000/cars").then(responce => responce.json())
             .then(data => {
 				console.log(data);
 				this.saveData(data);
                 //return data;
             })   
-	},
-	saveData : function (data) {
+	}
+	saveData (data) {
 		this.list = data;
-	},
+	}
 
-	updateItem : function () {
+	updateItem () {
 		fetch("http://localhost:3000/cars/5", options).then(responce => responce.json())
             .then(data => {
 				this.initComponent();
@@ -29,3 +28,6 @@ BaseGallery.prototype = {
 	}
 }
 
+this.initComponent();
+	
+console.log(list);

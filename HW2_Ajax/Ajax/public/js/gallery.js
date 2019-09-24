@@ -4,6 +4,8 @@ class BaseGallery {
 		this.locators = locators;
 		this.counter = 0;
 		this.arrToDisplay = [];
+		/////////
+		this.list = null;
 	}
 
 	initListeners() {
@@ -103,11 +105,38 @@ class BaseGallery {
 
 	}
 
-	prepareSourceData() {
-		let copiedData = data.slice();
+	getData() {
+		fetch("http://localhost:3000/cars")
+			.then(response => {
+				console.log(response.headers.get('Content-Type'));
+				console.log(response.status);
+				console.log(response.url);
+				return response.json();
+			})
+			.then(data => {
+				console.log(data);
+				this.saveData(data);
+				return data;
+			})
+	}
 
+	saveData(data) {
+		this.list = data;
+	}
+
+	updateItem() {
+		fetch("http://localhost:3000/cars/5", options).then(response => response.json())
+			.then(data => {
+				this.initComponent();
+			})
+	}
+
+	async prepareSourceData() {
+		let copiedData = this.getData();
+		console.log("copiedData: " + copiedData);
+		console.log("list: " + this.list);
 		let newArr = [];
-		copiedData.forEach(item => {
+		await copiedData.forEach(item => {
 			newArr.push({
 				url: item.url,
 				name: item.name,
