@@ -41,8 +41,8 @@ class BaseGallery {
 									<p class="card-text">${car.description}</p>
 									<div class="d-flex justify-content-between align-items-center">
 									<div class="btn-group">
-										<button type="button" class="btn btn-outline-secondary">View</button>
-										<button type="button" class="btn btn-outline-secondary">Edit</button>
+										<button type="button" class="btn btn-outline-secondary" data-view-btn="${idx}">View</button>
+										<button type="button" class="btn btn-outline-secondary" data-edit-btn="${idx}">Edit</button>
 									</div>
 									<a href="#" class="btn btn-danger" data-rm-btn="${idx}">Удалить</a>
 									<small class="text-muted">${car.date}</small>
@@ -161,7 +161,17 @@ class ExtendedGallery extends BaseGallery {
 
 	initListeners() {
 		super.initListeners();
+		this.locators.result.addEventListener("click", this.viewBtnHandler.bind(this));
+		this.locators.result.addEventListener("click", this.editBtnHandler.bind(this));
 		this.locators.result.addEventListener("click", this.removeBtnHandler.bind(this));
+	}
+
+	viewBtnHandler(e) {
+		this.removeElement(this.list, e.target.attributes["data-rm-btn"].nodeValue);
+	}
+
+	editBtnHandler(e) {
+		this.removeElement(this.list, e.target.attributes["data-rm-btn"].nodeValue);
 	}
 
 	removeElement(mappedArr, idx) {
