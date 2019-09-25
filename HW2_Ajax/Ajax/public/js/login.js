@@ -56,7 +56,7 @@ class LoginForm {
     showGallery() {
         this.hideAlert();
         this.hideClass(this.locators.formSignin);
-        this.gallery.initListeners();
+        this.gallery.initComponent();
         this.user.initComponent();
         this.showClass(this.gallery.locators.galleryView);
     }
