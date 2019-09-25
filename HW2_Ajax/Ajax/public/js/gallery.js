@@ -4,8 +4,7 @@ class BaseGallery {
 		this.locators = locators;
 		this.counter = 0;
 		this.arrToDisplay = [];
-		/////////
-		this.list = null;
+		this.list = [];
 	}
 
 	initListeners() {
@@ -65,7 +64,7 @@ class BaseGallery {
 	}
 
 	addBtnHandler(e) {
-		this.addElement(BaseGallery.prototype.prepareSourceData());
+		this.addElement(this.list);
 	}
 
 	filterThumbnails(filterValue) {
@@ -108,18 +107,9 @@ class BaseGallery {
 	prepareSourceData() {
 		fetch("http://localhost:3000/cars")
 			.then(response => {
-				//console.log(response.headers.get('Content-Type'));
-				//console.log(response.status);
-				//console.log(response.url);
 				return response.json();
 			})
 			.then(data => {
-				//console.table(data);
-				this.saveData(data);
-				return data;
-			})
-			.then(data => {
-				//console.table(data);
 				let newArr = [];
 				data.forEach(item => {
 					newArr.push({
@@ -138,7 +128,8 @@ class BaseGallery {
 						date: moment(item.date).format("YYYY/MM/DD HH:mm"),
 					}
 				})
-				return mappedArr;
+				this.saveData(mappedArr);
+				//return {status: true, data: mappedArr};
 			})
 	}
 
@@ -152,34 +143,7 @@ class BaseGallery {
 				this.initComponent();
 			})
 	}
-
-	/* 	prepareSourceData() {
-			let copiedData = this.getData();
-			console.log("copiedData: " + copiedData);
-			console.log("list: " + this.list);
-			let newArr = [];
-			await copiedData.forEach(item => {
-				newArr.push({
-					url: item.url,
-					name: item.name,
-					description: item.description,
-					date: item.date,
-				})
-			})
-	
-			let mappedArr = newArr.map(item => {
-				return {
-					url: `http://${item.url}`,
-					name: item.name.charAt(0).toLocaleUpperCase() + `${item.name}`.slice(1).toLowerCase(),
-					description: this.shrinkString(item.description),
-					date: moment(item.date).format("YYYY/MM/DD HH:mm"),
-				}
-			})
-	
-			return mappedArr;
-		} */
 }
-
 
 //--------------Inheritance------------------------------------
 
@@ -208,7 +172,7 @@ class ExtendedGallery extends BaseGallery {
 	}
 
 	removeBtnHandler(e) {
-		this.removeElement(this.prepareSourceData(), e.target.attributes["data-rm-btn"].nodeValue);
+		this.removeElement(this.list, e.target.attributes["data-rm-btn"].nodeValue);
 	}
 }
 

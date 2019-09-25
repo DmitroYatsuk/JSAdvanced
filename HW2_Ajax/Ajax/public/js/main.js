@@ -38,3 +38,4 @@ let galleryModule = new ExtendedGallery(galleryLocators);
 let loginForm = new LoginForm({ login: "my@mail.com", pwd: "12345678" }, validatorModule, galleryModule, userModule, loginLocators);
 
 loginForm.initComponent();
+galleryModule.prepareSourceData();

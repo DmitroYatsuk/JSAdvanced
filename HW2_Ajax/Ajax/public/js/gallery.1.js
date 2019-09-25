@@ -6,21 +6,23 @@ class BaseGallery {
 	constructor() {
 		this.list = [];
 		this.initComponent();
-/* 		console.log("list: ");
-		console.table(this.list); */
+		setTimeout(() => {
+		console.log("list: ");
+		console.table(this.list); 
+		}, 5000);	
 	}
 
 	initComponent() {
 		fetch("http://localhost:3000/cars").then(response => response.json())
 			.then(data => {
-				console.log("data: ");
-				console.table(data);
+				//console.log("data: ");
+				//console.table(data);
 				this.saveData(data);
 				//return data;
 			})
 			.then(() => {
-				console.log("list: ");
-				console.table(this.list);
+				//console.log("list: ");
+				//console.table(this.list);
 			})
 	}
 
