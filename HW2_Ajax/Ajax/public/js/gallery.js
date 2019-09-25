@@ -7,6 +7,11 @@ class BaseGallery {
 		this.list = [];
 	}
 
+	initComponent() {
+		this.prepareSourceData();
+		this.initListeners();
+	}
+
 	initListeners() {
 		this.locators.addBtn.addEventListener("click", this.addBtnHandler.bind(this));
 		this.locators.filterOne.addEventListener("click", this.filterHandler.bind(this));
