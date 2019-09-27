@@ -5,6 +5,12 @@ class BaseGallery {
 		this.counter = 0;
 		this.arrToDisplay = [];
 		this.list = [];
+		this.body= {};
+		this.url = document.getElementById("url");
+		this.name = document.getElementById("name");
+		this.id = document.getElementById("id");
+		this.description = document.getElementById("description");
+		this.date = document.getElementById("date");
 	}
 
 	initComponent() {
@@ -18,6 +24,8 @@ class BaseGallery {
 		this.locators.filterTwo.addEventListener("click", this.filterHandler.bind(this));
 		this.locators.filterThree.addEventListener("click", this.filterHandler.bind(this));
 		this.locators.filterFour.addEventListener("click", this.filterHandler.bind(this));
+		this.locators.createBtn.addEventListener("click", this.createBtnHandler.bind(this));
+		this.locators.editBtn.addEventListener("click", this.editBtnHandler.bind(this));
 	}
 
 	shrinkString(str) {
@@ -69,7 +77,9 @@ class BaseGallery {
 	}
 
 	addBtnHandler(e) {
-		this.addElement(this.list);
+		//this.addElement(this.list);
+		loginForm.hideClass(galleryLocators.galleryView);
+		loginForm.showClass(galleryLocators.createForm);
 	}
 
 	filterThumbnails(filterValue) {
@@ -142,12 +152,35 @@ class BaseGallery {
 		this.list = data;
 	}
 
-	updateItem() {
-		fetch("http://localhost:3000/cars/5", options).then(response => response.json())
+	updateItem(data) {
+
+		const json = JSON.stringify(data);
+
+		let options = {
+			method: 'post',
+			headers: {
+				'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
+			},
+			body: json
+		}
+		fetch(`http://localhost:3000/cars/${data.id}`, options)
+			.then(response => response.json())
 			.then(data => {
-				this.initComponent();
+				this.prepareSourceData();
 			})
 	}
+
+	createBtnHandler() {
+		let body = {
+			url: this.url.value,
+			name: this.name.value,
+			id: this.id.value,
+			description: this.description.value,
+			date: this.date.value
+		}
+		this.updateItem(body);
+	}
+
 }
 
 //--------------Inheritance------------------------------------
@@ -167,11 +200,15 @@ class ExtendedGallery extends BaseGallery {
 	}
 
 	viewBtnHandler(e) {
-		this.removeElement(this.list, e.target.attributes["data-rm-btn"].nodeValue);
+		e.target.attributes["data-view-btn"].nodeValue;
+		loginForm.hideClass(galleryLocators.galleryView);
+		loginForm.showClass(galleryLocators.editForm);
 	}
 
 	editBtnHandler(e) {
-		this.removeElement(this.list, e.target.attributes["data-rm-btn"].nodeValue);
+		e.target.attributes["data-edit-btn"].nodeValue;
+		loginForm.hideClass(galleryLocators.galleryView);
+		loginForm.showClass(galleryLocators.editForm);
 	}
 
 	removeElement(mappedArr, idx) {

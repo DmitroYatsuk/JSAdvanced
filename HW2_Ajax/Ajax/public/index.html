@@ -21,7 +21,7 @@
     </nav>
     <a id="sign-out" class="btn btn-outline-primary" href="#">Выход</a>
   </div>
-
+<!--Signin form-->
   <main class="text-center" role="main">
     <div id="alert" class="alert alert-danger hide" role="alert">
       This is a danger alert—check it out!
@@ -46,7 +46,7 @@
       <p class="mt-5 mb-3 text-muted">© 2019</p>
     </form>
   </main>
-
+<!--Gallery View-->
   <main id="gallery-view" class="hide" role="main">
     <section class="jumbotron text-center">
       <div class="container">
@@ -94,9 +94,32 @@
       </div>
     </div>
   </main>
-
+<!--Create Card-->
   <main class="text-center" role="main">
-    <form id="form-edit" class="form-edit">
+    <form id="form-create" class="form-create hide">
+      <h1 class="h3 mb-3 font-weight-normal">Create form</h1>
+      <label for="url" class="sr-only">URL</label>
+      <input type="text" id="url" class="form-control" placeholder="url" required="" autofocus="" autocomplete="off">
+      <div class="mb-3"></div>
+      <label for="name" class="sr-only">Name</label>
+      <input type="text" id="name" class="form-control" placeholder="name" required="" autocomplete="off">
+      <div class="mb-3"></div>
+      <label for="id" class="sr-only">Id</label>
+      <input type="text" id="id" class="form-control" placeholder="name" required="" autocomplete="off">
+      <div class="mb-3"></div>
+      <label for="description" class="sr-only">Description</label>
+      <input type="text" id="description" class="form-control" placeholder="description" required="" autocomplete="off">
+      <div class="mb-3"></div>
+      <label for="date" class="sr-only">Date</label>
+      <input type="date" id="date" class="form-control" placeholder="date" required="" autocomplete="off">
+      <div class="mb-3"></div>
+      <button id="btn-create" class="btn btn-lg btn-primary btn-block" type="submit">Create</button>
+      <p class="mt-5 mb-3 text-muted">© 2019</p>
+    </form>
+  </main>
+<!--Edit Card-->
+  <main class="text-center" role="main">
+    <form id="form-edit" class="form-edit hide">
       <h1 class="h3 mb-3 font-weight-normal">Edit form</h1>
       <label for="url" class="sr-only">URL</label>
       <input type="text" id="url" class="form-control" placeholder="url" required="" autofocus="" autocomplete="off">
@@ -108,33 +131,13 @@
       <input type="text" id="description" class="form-control" placeholder="description" required="" autocomplete="off">
       <div class="mb-3"></div>
       <label for="date" class="sr-only">Date</label>
-      <input type="text" id="date" class="form-control" placeholder="date" required="" autocomplete="off">
+      <input type="datetime" id="date" class="form-control" placeholder="date" required="" autocomplete="off">
       <div class="mb-3"></div>
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Update</button>
+      <button id="btn-edit" class="btn btn-lg btn-primary btn-block" type="submit">Update</button>
       <p class="mt-5 mb-3 text-muted">© 2019</p>
     </form>
   </main>
-
-  <main class="text-center" role="main">
-    <form id="form-create" class="form-create">
-      <h1 class="h3 mb-3 font-weight-normal">Create form</h1>
-      <label for="url" class="sr-only">URL</label>
-      <input type="text" id="url" class="form-control" placeholder="url" required="" autofocus="" autocomplete="off">
-      <div class="mb-3"></div>
-      <label for="name" class="sr-only">Name</label>
-      <input type="text" id="name" class="form-control" placeholder="name" required="" autocomplete="off">
-      <div class="mb-3"></div>
-      <label for="description" class="sr-only">Description</label>
-      <input type="text" id="description" class="form-control" placeholder="description" required="" autocomplete="off">
-      <div class="mb-3"></div>
-      <label for="date" class="sr-only">Date</label>
-      <input type="text" id="date" class="form-control" placeholder="date" required="" autocomplete="off">
-      <div class="mb-3"></div>
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Create</button>
-      <p class="mt-5 mb-3 text-muted">© 2019</p>
-    </form>
-  </main>
-
+<!--User Data-->
   <main>
     <form id="userData" class="form-user-data hide">
       <div>
