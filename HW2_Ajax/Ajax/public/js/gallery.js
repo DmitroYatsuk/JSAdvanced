@@ -4,13 +4,14 @@ class BaseGallery {
 		this.locators = locators;
 		this.counter = 0;
 		this.arrToDisplay = [];
-		this.list = [];
-		this.body= {};
+		//		this.list = [];
+		this.body = {};
 		this.url = document.getElementById("url");
 		this.name = document.getElementById("name");
 		this.id = document.getElementById("id");
 		this.description = document.getElementById("description");
 		this.date = document.getElementById("date");
+		//this.output = document.getElementById("output");
 	}
 
 	initComponent() {
@@ -24,14 +25,28 @@ class BaseGallery {
 		this.locators.filterTwo.addEventListener("click", this.filterHandler.bind(this));
 		this.locators.filterThree.addEventListener("click", this.filterHandler.bind(this));
 		this.locators.filterFour.addEventListener("click", this.filterHandler.bind(this));
-		//this.locators.createBtn.addEventListener("click", this.createBtnHandler.bind(this));
-		//this.locators.editBtn.addEventListener("click", this.editBtnHandler.bind(this));
+		this.locators.createBtn.addEventListener("click", this.createBtnHandler.bind(this));
+		this.locators.editBtn.addEventListener("click", this.editBtnHandler.bind(this));
 	}
 
 	shrinkString(str) {
 		return (str.length >= 15)
 			? str.substring(0, 15) + "..."
 			: str;
+	}
+
+	renderWholeGallery(mappedArr) {
+		//		if (this.counter < mappedArr.length) {
+		//			this.arrToDisplay.push(mappedArr[this.counter]);
+		//			if (this.counter === mappedArr.length - 1) {
+		//				this.locators.addBtn.style.backgroundColor = "grey";
+		//			}
+		//			this.counter += 1;
+		//		this.arrToDisplay = mappedArr;
+		//		this.filterThumbnails(this.getFilterType());
+		this.showResult();
+		//		}
+		//		else $("#myModal").modal();
 	}
 
 	showResult() {
@@ -79,9 +94,7 @@ class BaseGallery {
 	addBtnHandler(e) {
 		//this.addElement(this.list);
 		loginForm.hideClass(galleryLocators.galleryView);
-		service.createFormTemplate();
-		this.locators.createBtn.addEventListener("click", this.createBtnHandler.bind(this));
-		this.locators.editBtn.addEventListener("click", this.editBtnHandler.bind(this));
+		loginForm.showClass(galleryLocators.createForm);
 	}
 
 	filterThumbnails(filterValue) {
@@ -146,26 +159,25 @@ class BaseGallery {
 					}
 				})
 				this.saveData(mappedArr);
-				//return {status: true, data: mappedArr};
+				this.renderWholeGallery();
 			})
 	}
 
 	saveData(data) {
-		this.list = data;
+		this.arrToDisplay = data;
 	}
 
 	updateItem(data) {
-
-		const json = JSON.stringify(data);
-
+		let json = JSON.stringify(data);
+		console.log(json);
 		let options = {
 			method: 'post',
 			headers: {
 				'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
 			},
-			body: json
+			body: JSON.stringify(data)
 		}
-		fetch(`http://localhost:3000/cars/${data.id}`, options)
+		fetch(`http://localhost:3000/cars`, options)
 			.then(response => response.json())
 			.then(data => {
 				this.prepareSourceData();
@@ -202,12 +214,18 @@ class ExtendedGallery extends BaseGallery {
 	}
 
 	viewBtnHandler(e) {
+		if (!e.target.attributes["data-view-btn"]) {
+			return;
+		}
 		e.target.attributes["data-view-btn"].nodeValue;
 		loginForm.hideClass(galleryLocators.galleryView);
 		loginForm.showClass(galleryLocators.editForm);
 	}
 
 	editBtnHandler(e) {
+		if (!e.target.attributes["data-edit-btn"]) {
+			return;
+		}
 		e.target.attributes["data-edit-btn"].nodeValue;
 		loginForm.hideClass(galleryLocators.galleryView);
 		loginForm.showClass(galleryLocators.editForm);
@@ -226,7 +244,7 @@ class ExtendedGallery extends BaseGallery {
 	}
 
 	removeBtnHandler(e) {
-		this.removeElement(this.list, e.target.attributes["data-rm-btn"].nodeValue);
+		this.removeElement(this.arrToDisplay, e.target.attributes["data-rm-btn"].nodeValue);
 	}
 }
 

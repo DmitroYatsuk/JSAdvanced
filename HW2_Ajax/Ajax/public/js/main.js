@@ -11,7 +11,7 @@ const galleryLocators = {
     filterThree: document.getElementById("dropdown-3"),
     filterFour: document.getElementById("dropdown-4"),
     createForm: document.getElementById("form-create"),
-    editForm: document.getElementById("form-edit"),
+//    editForm: document.getElementById("form-edit"),
     createBtn: document.getElementById("btn-create"),
     editBtn: document.getElementById("btn-edit")
 };
