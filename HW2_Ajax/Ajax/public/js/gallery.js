@@ -93,8 +93,9 @@ class BaseGallery {
 
 	addBtnHandler(e) {
 		//this.addElement(this.list);
-		loginForm.hideClass(galleryLocators.galleryView);
-		loginForm.showClass(galleryLocators.createForm);
+		loginForm.hideElement(galleryLocators.galleryView);
+		loginForm.hideElement(galleryLocators.editBtn);
+		loginForm.showElement(galleryLocators.createForm);		
 	}
 
 	filterThumbnails(filterValue) {
@@ -168,12 +169,10 @@ class BaseGallery {
 	}
 
 	updateItem(data) {
-		let json = JSON.stringify(data);
-		console.log(json);
 		let options = {
 			method: 'post',
 			headers: {
-				'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
+				'Content-type': 'application/json'
 			},
 			body: JSON.stringify(data)
 		}
@@ -193,6 +192,8 @@ class BaseGallery {
 			date: this.date.value
 		}
 		this.updateItem(body);
+		loginForm.hideElement(galleryLocators.createForm);
+		loginForm.showElement(galleryLocators.galleryView);
 	}
 
 }
@@ -218,8 +219,8 @@ class ExtendedGallery extends BaseGallery {
 			return;
 		}
 		e.target.attributes["data-view-btn"].nodeValue;
-		loginForm.hideClass(galleryLocators.galleryView);
-		loginForm.showClass(galleryLocators.editForm);
+		loginForm.hideElement(galleryLocators.galleryView);
+		loginForm.showElement(galleryLocators.editForm);
 	}
 
 	editBtnHandler(e) {
@@ -227,8 +228,8 @@ class ExtendedGallery extends BaseGallery {
 			return;
 		}
 		e.target.attributes["data-edit-btn"].nodeValue;
-		loginForm.hideClass(galleryLocators.galleryView);
-		loginForm.showClass(galleryLocators.editForm);
+		loginForm.hideElement(galleryLocators.galleryView);
+		loginForm.showElement(galleryLocators.editForm);
 	}
 
 	removeElement(mappedArr, idx) {
