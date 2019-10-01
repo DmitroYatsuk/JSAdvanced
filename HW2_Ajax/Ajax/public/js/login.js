@@ -27,12 +27,12 @@ class LoginForm {
         this.locators.alert.classList.add("hide");
     }
 
-    hideClass(name) {
+    hideElement(name) {
         name.classList.remove("show");
         name.classList.add("hide");
     }
 
-    showClass(name) {
+    showElement(name) {
         name.classList.remove("hide");
         name.classList.add("show");
     }
@@ -55,10 +55,10 @@ class LoginForm {
 
     showGallery() {
         this.hideAlert();
-        this.hideClass(this.locators.formSignin);
+        this.hideElement(this.locators.formSignin);
         this.gallery.initComponent();
         this.user.initComponent();
-        this.showClass(this.gallery.locators.galleryView);
+        this.showElement(this.gallery.locators.galleryView);
     }
 
     submitHandler(e) {
@@ -78,23 +78,23 @@ class LoginForm {
     quitBtnHandler() {
         this.locators.loginInput.value = "";
         this.locators.passwordInput.value = "";
-        this.showClass(this.locators.formSignin);
-        this.hideClass(this.locators.userData);
-        this.hideClass(this.gallery.locators.galleryView);
+        this.showElement(this.locators.formSignin);
+        this.hideElement(this.locators.userData);
+        this.hideElement(this.gallery.locators.galleryView);
         this.setLoggedIn(false);
         this.setRememberMe(false);
     }
 
     goToGalleryHandler(e) {
-        this.hideClass(this.locators.userData);
-        this.showClass(this.gallery.locators.galleryView);
+        this.hideElement(this.locators.userData);
+        this.showElement(this.gallery.locators.galleryView);
     }
 
     goToUserHandler(e) {
-        this.hideClass(this.gallery.locators.galleryView);
+        this.hideElement(this.gallery.locators.galleryView);
         this.locators.userLogin.value = this.loginPwd.login;
         this.locators.userPassword.value = this.loginPwd.pwd;
-        this.showClass(this.locators.userData);
+        this.showElement(this.locators.userData);
     }
 
     galleryInitDisplay() {
