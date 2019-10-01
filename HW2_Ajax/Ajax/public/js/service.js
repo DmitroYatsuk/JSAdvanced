@@ -1,45 +1,8 @@
-
+'use strict';
 class listService {
+	constructor(){
 
-/* 	function duplicateArray(arr, count) {
-		let res = [];
-		for (let i = 0; i <= count; i++) {
-			res = res.concat(arr.map(a => Object.assign({}, a)))
-		}
-		return res;
 	}
-
-	function hideElements(elementArray) {
-		elementArray.forEach(function (element) {
-			element.classList.add("hide");
-		})
-	}
-
-	function showElements(elementArray) {
-		elementArray.forEach(function (element) {
-			element.classList.remove("hide");
-		})
-	}
-
-	function sortEmailAsc(a, b) {
-		return a.email > b.email ? 1 : -1;
-	}
-
-	function sortEmailDesc(a, b) {
-		return a.email < b.email ? 1 : -1;;
-	}
-
-	function filterAdminRole(item) {
-		return item.role == "Admin";
-	}
-
-	function filterUserRole(item) {
-		return item.role == "User";
-	}
-
-	function initTooltip() {
-		$('[data-toggle="tooltip"]').tooltip();
-	} */
 
 	editFormTemplate(item) {
 		return `<main class="text-center" role="main">
@@ -63,7 +26,7 @@ class listService {
 	  </main>`;
 	}
 
-	createFormTemplate(item) {
+	createFormTemplate() {
 		return `<main class="text-center" role="main">
 		<form id="form-create" class="form-create">
 		  <h1 class="h3 mb-3 font-weight-normal">Edit form</h1>

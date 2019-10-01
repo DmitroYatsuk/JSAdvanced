@@ -24,8 +24,8 @@ class BaseGallery {
 		this.locators.filterTwo.addEventListener("click", this.filterHandler.bind(this));
 		this.locators.filterThree.addEventListener("click", this.filterHandler.bind(this));
 		this.locators.filterFour.addEventListener("click", this.filterHandler.bind(this));
-		this.locators.createBtn.addEventListener("click", this.createBtnHandler.bind(this));
-		this.locators.editBtn.addEventListener("click", this.editBtnHandler.bind(this));
+		//this.locators.createBtn.addEventListener("click", this.createBtnHandler.bind(this));
+		//this.locators.editBtn.addEventListener("click", this.editBtnHandler.bind(this));
 	}
 
 	shrinkString(str) {
@@ -79,7 +79,9 @@ class BaseGallery {
 	addBtnHandler(e) {
 		//this.addElement(this.list);
 		loginForm.hideClass(galleryLocators.galleryView);
-		loginForm.showClass(galleryLocators.createForm);
+		service.createFormTemplate();
+		this.locators.createBtn.addEventListener("click", this.createBtnHandler.bind(this));
+		this.locators.editBtn.addEventListener("click", this.editBtnHandler.bind(this));
 	}
 
 	filterThumbnails(filterValue) {
