@@ -5,7 +5,9 @@ class BaseGallery {
 		this.counter = 0;
 		this.arrToDisplay = [];
 		//		this.list = [];
+
 		this.body = {};
+		this.formHeader = document.getElementById("form-header");
 		this.url = document.getElementById("url");
 		this.name = document.getElementById("name");
 		this.id = document.getElementById("id");
@@ -26,7 +28,7 @@ class BaseGallery {
 		this.locators.filterThree.addEventListener("click", this.filterHandler.bind(this));
 		this.locators.filterFour.addEventListener("click", this.filterHandler.bind(this));
 		this.locators.createBtn.addEventListener("click", this.createBtnHandler.bind(this));
-		this.locators.editBtn.addEventListener("click", this.editBtnHandler.bind(this));
+		this.locators.updateBtn.addEventListener("click", this.updateBtnHandler.bind(this));
 	}
 
 	shrinkString(str) {
@@ -94,8 +96,8 @@ class BaseGallery {
 	addBtnHandler(e) {
 		//this.addElement(this.list);
 		loginForm.hideElement(galleryLocators.galleryView);
-		loginForm.hideElement(galleryLocators.editBtn);
-		loginForm.showElement(galleryLocators.createForm);		
+		loginForm.hideElement(galleryLocators.updateBtn);
+		loginForm.showElement(galleryLocators.createForm);
 	}
 
 	filterThumbnails(filterValue) {
@@ -170,7 +172,7 @@ class BaseGallery {
 
 	updateItem(data) {
 		let options = {
-			method: 'post',
+			method: 'POST',
 			headers: {
 				'Content-type': 'application/json'
 			},
@@ -196,6 +198,19 @@ class BaseGallery {
 		loginForm.showElement(galleryLocators.galleryView);
 	}
 
+	updateBtnHandler() {
+		let body = {
+			url: this.url.value,
+			name: this.name.value,
+			id: this.id.value,
+			description: this.description.value,
+			date: this.date.value
+		}
+		this.updateItem(body);
+		loginForm.hideElement(galleryLocators.createForm);
+		loginForm.showElement(galleryLocators.galleryView);
+	}
+
 }
 
 //--------------Inheritance------------------------------------
@@ -209,43 +224,69 @@ class ExtendedGallery extends BaseGallery {
 
 	initListeners() {
 		super.initListeners();
-		this.locators.result.addEventListener("click", this.viewBtnHandler.bind(this));
-		this.locators.result.addEventListener("click", this.editBtnHandler.bind(this));
+		this.locators.result.addEventListener("click", this.viewFormBtnHandler.bind(this));
+		this.locators.result.addEventListener("click", this.editFormBtnHandler.bind(this));
 		this.locators.result.addEventListener("click", this.removeBtnHandler.bind(this));
 	}
 
-	viewBtnHandler(e) {
+	viewFormBtnHandler(e) {
 		if (!e.target.attributes["data-view-btn"]) {
 			return;
 		}
 		e.target.attributes["data-view-btn"].nodeValue;
-		loginForm.hideElement(galleryLocators.galleryView);
-		loginForm.showElement(galleryLocators.editForm);
+
 	}
 
-	editBtnHandler(e) {
+	editFormBtnHandler(e) {
 		if (!e.target.attributes["data-edit-btn"]) {
 			return;
 		}
 		e.target.attributes["data-edit-btn"].nodeValue;
 		loginForm.hideElement(galleryLocators.galleryView);
-		loginForm.showElement(galleryLocators.editForm);
+		this.formHeader.innerHTML = "Edit element form";
+		this.url.value,
+		this.name.value,
+		this.id.value,
+		this.description.value,
+		this.date.value
+		loginForm.showElement(galleryLocators.updateBtn);
+		loginForm.hideElement(galleryLocators.createBtn);
+		loginForm.showElement(galleryLocators.createForm);
+
 	}
 
-	removeElement(mappedArr, idx) {
-		if (this.counter >= 0) {
-			this.arrToDisplay.splice(idx, 1);
-			if (this.counter <= mappedArr.length) {
-				this.locators.addBtn.style.backgroundColor = "";
+	/* 	removeElement(mappedArr, idx) {
+			if (this.counter >= 0) {
+				this.arrToDisplay.splice(idx, 1);
+				if (this.counter <= mappedArr.length) {
+					this.locators.addBtn.style.backgroundColor = "";
+				}
+				this.counter -= 1;
+				this.filterThumbnails(this.getFilterType());
+				this.showResult();
 			}
-			this.counter -= 1;
-			this.filterThumbnails(this.getFilterType());
-			this.showResult();
+		} */
+
+	deleteItem(idx) {
+		let options = {
+			method: 'DELETE',
+			headers: {
+				'Content-type': 'application/json'
+			}
 		}
+		fetch(`http://localhost:3000/cars/${idx}`, options)
+			.then(response => response.json())
+			.then(data => {
+				this.prepareSourceData();
+			})
 	}
 
 	removeBtnHandler(e) {
-		this.removeElement(this.arrToDisplay, e.target.attributes["data-rm-btn"].nodeValue);
+		if (!e.target.attributes["data-rm-btn"]) {
+			return;
+		}
+		//this.removeElement(this.arrToDisplay, e.target.attributes["data-rm-btn"].nodeValue);
+		this.deleteItem(+e.target.attributes["data-rm-btn"].nodeValue + 1);
 	}
 }
 
