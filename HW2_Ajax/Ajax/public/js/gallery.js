@@ -2,17 +2,14 @@
 class BaseGallery {
 	constructor(locators) {
 		this.locators = locators;
-		this.counter = 0;
 		this.arrToDisplay = [];
 
-		this.body = {};
 		this.formHeader = document.getElementById("form-header");
 		this.url = document.getElementById("url");
 		this.name = document.getElementById("name");
 		this.id = document.getElementById("id");
 		this.description = document.getElementById("description");
 		this.date = document.getElementById("date");
-		//this.output = document.getElementById("output");
 	}
 
 	initComponent() {
@@ -34,20 +31,6 @@ class BaseGallery {
 		return (str.length >= 15)
 			? str.substring(0, 15) + "..."
 			: str;
-	}
-
-	renderWholeGallery(mappedArr) {
-		//		if (this.counter < mappedArr.length) {
-		//			this.arrToDisplay.push(mappedArr[this.counter]);
-		//			if (this.counter === mappedArr.length - 1) {
-		//				this.locators.addBtn.style.backgroundColor = "grey";
-		//			}
-		//			this.counter += 1;
-		//		this.arrToDisplay = mappedArr;
-		//		this.filterThumbnails(this.getFilterType());
-		this.showResult();
-		//		}
-		//		else $("#myModal").modal();
 	}
 
 	showResult() {
@@ -79,21 +62,7 @@ class BaseGallery {
 		this.locators.result.innerHTML = resultHTML;
 	}
 
-	addElement(mappedArr) {
-		if (this.counter < mappedArr.length) {
-			this.arrToDisplay.push(mappedArr[this.counter]);
-			if (this.counter === mappedArr.length - 1) {
-				this.locators.addBtn.style.backgroundColor = "grey";
-			}
-			this.counter += 1;
-			this.filterThumbnails(this.getFilterType());
-			this.showResult();
-		}
-		else $("#myModal").modal();
-	}
-
 	addBtnHandler(e) {
-		//this.addElement(this.list);
 		loginForm.hideElement(galleryLocators.galleryView);
 		loginForm.hideElement(galleryLocators.updateBtn);
 		loginForm.showElement(galleryLocators.createForm);
@@ -161,7 +130,8 @@ class BaseGallery {
 					}
 				})
 				this.saveData(mappedArr);
-				this.renderWholeGallery();
+				this.filterThumbnails(this.getFilterType());
+				this.showResult();
 			})
 	}
 
@@ -234,7 +204,7 @@ class BaseGallery {
 			description: this.description.value,
 			date: +this.date.value
 		}
-		this.updateItem( body);
+		this.updateItem(body);
 		loginForm.hideElement(galleryLocators.createForm);
 		loginForm.showElement(galleryLocators.galleryView);
 	}

@@ -2,14 +2,10 @@
   "cars": [
     {
       "url": "desktopwallpapers.org.ua/mini/201507/40069.jpg",
-      "name": "CHEVROLET",
+      "name": "CHEVROLET new",
       "id": 1,
-      "params": {
-        "status": true,
-        "progress": "80"
-      },
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      "date": 1422153200637
+      "date": 1422153200639
     },
     {
       "url": "desktopwallpapers.org.ua/mini/201507/40068.jpg",
