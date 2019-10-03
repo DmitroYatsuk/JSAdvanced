@@ -4,7 +4,6 @@ class BaseGallery {
 		this.locators = locators;
 		this.counter = 0;
 		this.arrToDisplay = [];
-		//		this.list = [];
 
 		this.body = {};
 		this.formHeader = document.getElementById("form-header");
@@ -138,7 +137,7 @@ class BaseGallery {
 	}
 
 	prepareSourceData() {
-		fetch("http://localhost:3000/cars")
+		fetch(`http://localhost:3000/cars`)
 			.then(response => {
 				return response.json();
 			})
@@ -170,11 +169,11 @@ class BaseGallery {
 		this.arrToDisplay = data;
 	}
 
-	updateItem(data) {
+	createItem(data) {
 		let options = {
 			method: 'POST',
 			headers: {
-				'Content-type': 'application/json'
+				'Content-type': 'application/json; charset=utf-8'
 			},
 			body: JSON.stringify(data)
 		}
@@ -193,20 +192,49 @@ class BaseGallery {
 			description: this.description.value,
 			date: this.date.value
 		}
-		this.updateItem(body);
+		this.createItem(body);
 		loginForm.hideElement(galleryLocators.createForm);
 		loginForm.showElement(galleryLocators.galleryView);
 	}
 
-	updateBtnHandler() {
+	getRawData(idx) {
+		fetch(`http://localhost:3000/cars/${idx}`)
+			.then(response => {
+				return response.json();
+			})
+			.then(data => {
+				this.url.value = data.url;
+				this.name.value = data.name;
+				this.id.value = data.id;
+				this.description.value = data.description;
+				this.date.value = data.date;
+			})
+	}
+
+	updateItem(data) {
+		let options = {
+			method: 'PUT',
+			headers: {
+				'Content-type': 'application/json; charset=utf-8'
+			},
+			body: JSON.stringify(data)
+		}
+		fetch(`http://localhost:3000/cars/${data.id}`, options)
+			.then(response => response.json())
+			.then(data => {
+				this.prepareSourceData();
+			})
+	}
+
+	updateBtnHandler(e) {
 		let body = {
 			url: this.url.value,
 			name: this.name.value,
-			id: this.id.value,
+			id: +this.id.value,
 			description: this.description.value,
-			date: this.date.value
+			date: +this.date.value
 		}
-		this.updateItem(body);
+		this.updateItem( body);
 		loginForm.hideElement(galleryLocators.createForm);
 		loginForm.showElement(galleryLocators.galleryView);
 	}
@@ -241,14 +269,12 @@ class ExtendedGallery extends BaseGallery {
 		if (!e.target.attributes["data-edit-btn"]) {
 			return;
 		}
-		e.target.attributes["data-edit-btn"].nodeValue;
+
 		loginForm.hideElement(galleryLocators.galleryView);
 		this.formHeader.innerHTML = "Edit element form";
-		this.url.value,
-		this.name.value,
-		this.id.value,
-		this.description.value,
-		this.date.value
+
+		this.getRawData(+e.target.attributes["data-edit-btn"].nodeValue + 1);
+
 		loginForm.showElement(galleryLocators.updateBtn);
 		loginForm.hideElement(galleryLocators.createBtn);
 		loginForm.showElement(galleryLocators.createForm);
@@ -271,7 +297,7 @@ class ExtendedGallery extends BaseGallery {
 		let options = {
 			method: 'DELETE',
 			headers: {
-				'Content-type': 'application/json'
+				'Content-type': 'application/json; charset=utf-8'
 			}
 		}
 		fetch(`http://localhost:3000/cars/${idx}`, options)
