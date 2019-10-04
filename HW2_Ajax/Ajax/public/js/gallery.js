@@ -143,11 +143,15 @@ class BaseGallery {
 			},
 			body: JSON.stringify(data)
 		}
+		this.fetchData(options);
+	}
+
+	fetchData(options) {
 		fetch(`http://localhost:3000/cars`, options)
 			.then(response => response.json())
 			.then(data => {
 				this.prepareSourceData();
-			})
+			});
 	}
 
 	createBtnHandler() {
