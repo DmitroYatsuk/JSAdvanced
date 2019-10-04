@@ -27,15 +27,9 @@ class BaseGallery {
 		this.locators.updateBtn.addEventListener("click", this.updateBtnHandler.bind(this));
 	}
 
-	shrinkString(str) {
-		return (str.length >= 15)
-			? str.substring(0, 15) + "..."
-			: str;
-	}
-
 	showResult() {
 		let resultHTML = "";
-		this.arrToDisplay.forEach(function (car, idx) {
+		this.arrToDisplay.forEach(function (car, idx) { 
 			resultHTML += `
 							<div class="col-md-4">
 								<div class="card mb-4 box-shadow">
@@ -48,10 +42,10 @@ class BaseGallery {
 									<p class="card-text">${car.description}</p>
 									<div class="d-flex justify-content-between align-items-center">
 									<div class="btn-group">
-										<button type="button" class="btn btn-outline-secondary" data-view-btn="${idx}">View</button>
-										<button type="button" class="btn btn-outline-secondary" data-edit-btn="${idx}">Edit</button>
+										<button type="button" class="btn btn-outline-secondary" data-view-btn="${car.id}">View</button>
+										<button type="button" class="btn btn-outline-secondary" data-edit-btn="${car.id}">Edit</button>
 									</div>
-									<a href="#" class="btn btn-danger" data-rm-btn="${idx}">Удалить</a>
+									<a href="#" class="btn btn-danger" data-rm-btn="${car.id}">Удалить</a>
 									<small class="text-muted">${car.date}</small>
 									</div>
 								</div>
@@ -68,7 +62,7 @@ class BaseGallery {
 		loginForm.showElement(galleryLocators.createForm);
 	}
 
-	filterThumbnails(filterValue) {
+	filterCards(filterValue) {
 		this.setFilterType(filterValue);
 		switch (filterValue) {
 			case "dropdown-1":
@@ -87,7 +81,7 @@ class BaseGallery {
 	}
 
 	filterHandler(e) {
-		this.filterThumbnails(e.target.id);
+		this.filterCards(e.target.id);
 		this.showResult();
 	}
 
@@ -116,6 +110,7 @@ class BaseGallery {
 					newArr.push({
 						url: item.url,
 						name: item.name,
+						id: item.id,
 						description: item.description,
 						date: item.date,
 					})
@@ -125,12 +120,13 @@ class BaseGallery {
 					return {
 						url: `http://${item.url}`,
 						name: item.name.charAt(0).toLocaleUpperCase() + `${item.name}`.slice(1).toLowerCase(),
-						description: this.shrinkString(item.description),
+						id: item.id,
+						description: service.shrinkString(item.description),
 						date: moment(item.date).format("YYYY/MM/DD HH:mm"),
 					}
 				})
 				this.saveData(mappedArr);
-				this.filterThumbnails(this.getFilterType());
+				this.filterCards(this.getFilterType());
 				this.showResult();
 			})
 	}
@@ -159,6 +155,7 @@ class BaseGallery {
 			url: this.url.value,
 			name: this.name.value,
 			id: this.id.value,
+			//id: this.arrToDisplay.length + 1,
 			description: this.description.value,
 			date: this.date.value
 		}
@@ -200,7 +197,7 @@ class BaseGallery {
 		let body = {
 			url: this.url.value,
 			name: this.name.value,
-			id: +this.id.value,
+			id: this.id.value,
 			description: this.description.value,
 			date: +this.date.value
 		}
@@ -243,25 +240,13 @@ class ExtendedGallery extends BaseGallery {
 		loginForm.hideElement(galleryLocators.galleryView);
 		this.formHeader.innerHTML = "Edit element form";
 
-		this.getRawData(+e.target.attributes["data-edit-btn"].nodeValue + 1);
+		this.getRawData(e.target.attributes["data-edit-btn"].nodeValue);
 
 		loginForm.showElement(galleryLocators.updateBtn);
 		loginForm.hideElement(galleryLocators.createBtn);
 		loginForm.showElement(galleryLocators.createForm);
-
+		e.preventDefault();
 	}
-
-	/* 	removeElement(mappedArr, idx) {
-			if (this.counter >= 0) {
-				this.arrToDisplay.splice(idx, 1);
-				if (this.counter <= mappedArr.length) {
-					this.locators.addBtn.style.backgroundColor = "";
-				}
-				this.counter -= 1;
-				this.filterThumbnails(this.getFilterType());
-				this.showResult();
-			}
-		} */
 
 	deleteItem(idx) {
 		let options = {
@@ -281,8 +266,7 @@ class ExtendedGallery extends BaseGallery {
 		if (!e.target.attributes["data-rm-btn"]) {
 			return;
 		}
-		//this.removeElement(this.arrToDisplay, e.target.attributes["data-rm-btn"].nodeValue);
-		this.deleteItem(+e.target.attributes["data-rm-btn"].nodeValue + 1);
+		this.deleteItem(e.target.attributes["data-rm-btn"].nodeValue);
 	}
 }
 
