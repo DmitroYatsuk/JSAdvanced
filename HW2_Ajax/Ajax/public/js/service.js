@@ -28,4 +28,5 @@ class Service {
 			body: JSON.stringify(bodyData)
 		}
 	}
+
 }

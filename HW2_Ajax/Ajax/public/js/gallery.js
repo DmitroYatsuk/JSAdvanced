@@ -101,28 +101,28 @@ class BaseGallery {
 
 	mapData(data) {
 		let newArr = [];
-				data.forEach(item => {
-					newArr.push({
-						url: item.url,
-						name: item.name,
-						id: item.id,
-						description: item.description,
-						date: item.date,
-					})
-				})
+		data.forEach(item => {
+			newArr.push({
+				url: item.url,
+				name: item.name,
+				id: item.id,
+				description: item.description,
+				date: item.date,
+			})
+		})
 
-				let mappedArr = newArr.map(item => {
-					return {
-						url: `http://${item.url}`,
-						name: item.name.charAt(0).toLocaleUpperCase() + `${item.name}`.slice(1).toLowerCase(),
-						id: item.id,
-						description: service.shrinkString(item.description),
-						date: moment(item.date).format("YYYY/MM/DD HH:mm"),
-					}
-				})
-				this.saveData(mappedArr);
-				this.filterCards(this.getFilterType());
-				this.showResult();
+		let mappedArr = newArr.map(item => {
+			return {
+				url: `http://${item.url}`,
+				name: item.name.charAt(0).toLocaleUpperCase() + `${item.name}`.slice(1).toLowerCase(),
+				id: item.id,
+				description: service.shrinkString(item.description),
+				date: moment(item.date).format("YYYY/MM/DD HH:mm"),
+			}
+		})
+		this.saveData(mappedArr);
+		this.filterCards(this.getFilterType());
+		this.showResult();
 	}
 
 	prepareSourceData() {
@@ -138,16 +138,8 @@ class BaseGallery {
 		service.fetchData("", options, this.prepareSourceData.bind(this));
 	}
 
-	createBtnHandler() {
-		let body = {
-			url: this.url.value,
-			name: this.name.value,
-			id: this.id.value,
-			//id: this.arrToDisplay.length + 1,
-			description: this.description.value,
-			date: this.date.value
-		}
-		this.createItem(body);
+	createBtnHandler(e) {
+		this.createItem(this.getInputValues());
 		loginForm.hideElement(galleryLocators.createForm);
 		loginForm.showElement(galleryLocators.galleryView);
 	}
@@ -160,6 +152,16 @@ class BaseGallery {
 		this.date.value = data.date;
 	}
 
+	getInputValues() {
+		return {
+			url: this.url.value,
+			name: this.name.value,
+			id: this.id.value,
+			description: this.description.value,
+			date: +this.date.value
+		}
+	}
+
 	getRawData(id) {
 		service.fetchData(id, null, this.setInputValues.bind(this));
 	}
@@ -170,18 +172,10 @@ class BaseGallery {
 	}
 
 	updateBtnHandler(e) {
-		let body = {
-			url: this.url.value,
-			name: this.name.value,
-			id: this.id.value,
-			description: this.description.value,
-			date: +this.date.value
-		}
-		this.updateItem(body);
+		this.updateItem(this.getInputValues());
 		loginForm.hideElement(galleryLocators.createForm);
 		loginForm.showElement(galleryLocators.galleryView);
 	}
-
 }
 
 //--------------Inheritance------------------------------------
@@ -212,16 +206,12 @@ class ExtendedGallery extends BaseGallery {
 		if (!e.target.attributes["data-edit-btn"]) {
 			return;
 		}
-
 		loginForm.hideElement(galleryLocators.galleryView);
 		this.formHeader.innerHTML = "Edit element form";
-
 		this.getRawData(e.target.attributes["data-edit-btn"].nodeValue);
-
 		loginForm.showElement(galleryLocators.updateBtn);
 		loginForm.hideElement(galleryLocators.createBtn);
 		loginForm.showElement(galleryLocators.createForm);
-		e.preventDefault();
 	}
 
 	deleteItem(id) {
