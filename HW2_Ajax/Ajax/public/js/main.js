@@ -36,7 +36,8 @@ const userLocators = {
     showPwdBtn: document.getElementById("showPwd")
 };
 
-let service = new listService();
+//let config = new Config();
+let service = new Service();
 let validatorModule = new Validator();
 let userModule = new userForm(userLocators);
 let galleryModule = new ExtendedGallery(galleryLocators);

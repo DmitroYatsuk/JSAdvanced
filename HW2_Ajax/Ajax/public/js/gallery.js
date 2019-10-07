@@ -29,7 +29,7 @@ class BaseGallery {
 
 	showResult() {
 		let resultHTML = "";
-		this.arrToDisplay.forEach(function (car, idx) { 
+		this.arrToDisplay.forEach(function (car, idx) {
 			resultHTML += `
 							<div class="col-md-4">
 								<div class="card mb-4 box-shadow">
@@ -99,13 +99,8 @@ class BaseGallery {
 
 	}
 
-	prepareSourceData() {
-		fetch(`http://localhost:3000/cars`)
-			.then(response => {
-				return response.json();
-			})
-			.then(data => {
-				let newArr = [];
+	mapData(data) {
+		let newArr = [];
 				data.forEach(item => {
 					newArr.push({
 						url: item.url,
@@ -128,7 +123,10 @@ class BaseGallery {
 				this.saveData(mappedArr);
 				this.filterCards(this.getFilterType());
 				this.showResult();
-			})
+	}
+
+	prepareSourceData() {
+		service.fetchData("", null, this.mapData.bind(this));
 	}
 
 	saveData(data) {
@@ -136,22 +134,8 @@ class BaseGallery {
 	}
 
 	createItem(data) {
-		let options = {
-			method: 'POST',
-			headers: {
-				'Content-type': 'application/json; charset=utf-8'
-			},
-			body: JSON.stringify(data)
-		}
-		this.fetchData(options);
-	}
-
-	fetchData(options) {
-		fetch(`http://localhost:3000/cars`, options)
-			.then(response => response.json())
-			.then(data => {
-				this.prepareSourceData();
-			});
+		let options = service.getOptionData("POST", data);
+		service.fetchData("", options, this.prepareSourceData.bind(this));
 	}
 
 	createBtnHandler() {
@@ -168,33 +152,21 @@ class BaseGallery {
 		loginForm.showElement(galleryLocators.galleryView);
 	}
 
-	getRawData(idx) {
-		fetch(`http://localhost:3000/cars/${idx}`)
-			.then(response => {
-				return response.json();
-			})
-			.then(data => {
-				this.url.value = data.url;
-				this.name.value = data.name;
-				this.id.value = data.id;
-				this.description.value = data.description;
-				this.date.value = data.date;
-			})
+	setInputValues(data) {
+		this.url.value = data.url;
+		this.name.value = data.name;
+		this.id.value = data.id;
+		this.description.value = data.description;
+		this.date.value = data.date;
+	}
+
+	getRawData(id) {
+		service.fetchData(id, null, this.setInputValues.bind(this));
 	}
 
 	updateItem(data) {
-		let options = {
-			method: 'PUT',
-			headers: {
-				'Content-type': 'application/json; charset=utf-8'
-			},
-			body: JSON.stringify(data)
-		}
-		fetch(`http://localhost:3000/cars/${data.id}`, options)
-			.then(response => response.json())
-			.then(data => {
-				this.prepareSourceData();
-			})
+		let options = service.getOptionData("PUT", data);
+		service.fetchData(data.id, options, this.prepareSourceData.bind(this));
 	}
 
 	updateBtnHandler(e) {
@@ -252,18 +224,9 @@ class ExtendedGallery extends BaseGallery {
 		e.preventDefault();
 	}
 
-	deleteItem(idx) {
-		let options = {
-			method: 'DELETE',
-			headers: {
-				'Content-type': 'application/json; charset=utf-8'
-			}
-		}
-		fetch(`http://localhost:3000/cars/${idx}`, options)
-			.then(response => response.json())
-			.then(data => {
-				this.prepareSourceData();
-			})
+	deleteItem(id) {
+		let options = service.getOptionData("DELETE");
+		service.fetchData(id, options, this.prepareSourceData.bind(this));
 	}
 
 	removeBtnHandler(e) {
