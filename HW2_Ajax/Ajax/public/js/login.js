@@ -6,6 +6,7 @@ class LoginForm {
         this.user = userModule;
         this.locators = locators;
         this.loginPwd = loginPwd;
+        //this.loginPwd = {};
     }
 
     initListeners() {
@@ -63,6 +64,8 @@ class LoginForm {
 
     submitHandler(e) {
         e.preventDefault();
+        //let retVal = this.validator.isTrue(this.locators.loginInput.value, this.locators.passwordInput.value);
+        //this.loginPwd = service.fetchCredentials();
         let retVal = this.validator.isTrue(this.locators.loginInput.value, this.locators.passwordInput.value);
         if (retVal.status === true) {
             this.setLoggedIn(true);
