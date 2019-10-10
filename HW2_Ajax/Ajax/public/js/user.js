@@ -1,5 +1,5 @@
 'use strict';
-class userForm {
+class UserForm {
     constructor (locators) {
         this.locators = locators;
 }
@@ -9,7 +9,7 @@ class userForm {
     }
 
     showPwdHandler (e) {
-        loginForm.locators.userPassword.type = loginForm.locators.userPassword.type
+        this.locators.userPassword.type = loginForm.locators.userPassword.type
             === 'password' ? 'text' : 'password';
         e.target.innerText = e.target.innerText
             === "Show password" ? 'Hide password' : 'Show password';

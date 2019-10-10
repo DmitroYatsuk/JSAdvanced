@@ -57,9 +57,9 @@ class BaseGallery {
 	}
 
 	addBtnHandler(e) {
-		loginForm.hideElement(galleryLocators.galleryView);
-		loginForm.hideElement(galleryLocators.updateBtn);
-		loginForm.showElement(galleryLocators.createForm);
+		loginForm.hideElement(this.locators.galleryView);
+		loginForm.hideElement(this.locators.updateBtn);
+		loginForm.showElement(this.locators.createForm);
 	}
 
 	filterCards(filterValue) {
@@ -140,8 +140,8 @@ class BaseGallery {
 
 	createBtnHandler(e) {
 		this.createItem(this.getInputValues());
-		loginForm.hideElement(galleryLocators.createForm);
-		loginForm.showElement(galleryLocators.galleryView);
+		loginForm.hideElement(this.locators.createForm);
+		loginForm.showElement(this.locators.galleryView);
 	}
 
 	setInputValues(data) {
@@ -173,8 +173,8 @@ class BaseGallery {
 
 	updateBtnHandler(e) {
 		this.updateItem(this.getInputValues());
-		loginForm.hideElement(galleryLocators.createForm);
-		loginForm.showElement(galleryLocators.galleryView);
+		loginForm.hideElement(this.locators.createForm);
+		loginForm.showElement(this.locators.galleryView);
 	}
 }
 
@@ -206,12 +206,12 @@ class ExtendedGallery extends BaseGallery {
 		if (!e.target.attributes["data-edit-btn"]) {
 			return;
 		}
-		loginForm.hideElement(galleryLocators.galleryView);
+		loginForm.hideElement(this.locators.galleryView);
 		this.formHeader.innerHTML = "Edit element form";
 		this.getRawData(e.target.attributes["data-edit-btn"].nodeValue);
-		loginForm.showElement(galleryLocators.updateBtn);
-		loginForm.hideElement(galleryLocators.createBtn);
-		loginForm.showElement(galleryLocators.createForm);
+		loginForm.showElement(this.locators.updateBtn);
+		loginForm.hideElement(this.locators.createBtn);
+		loginForm.showElement(this.locators.createForm);
 	}
 
 	deleteItem(id) {

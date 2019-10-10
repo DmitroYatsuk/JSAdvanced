@@ -55,11 +55,13 @@ class LoginForm {
     }
 
     showGallery() {
-        this.hideAlert();
-        this.hideElement(this.locators.formSignin);
+        service.showPage("gallery-view", pagesLocators);
+        //this.hideAlert();
+        //this.hideElement(this.locators.formSignin);
         this.gallery.initComponent();
         this.user.initComponent();
-        this.showElement(this.gallery.locators.galleryView);
+        //this.showElement(this.locators.galleryView);
+        //this.showElement(this.locators.nav);
     }
 
     submitHandler(e) {
@@ -83,24 +85,25 @@ class LoginForm {
         this.locators.passwordInput.value = "";
         this.showElement(this.locators.formSignin);
         this.hideElement(this.locators.userData);
-        this.hideElement(this.gallery.locators.galleryView);
+        this.hideElement(this.locators.galleryView);
         this.setLoggedIn(false);
         this.setRememberMe(false);
     }
 
     goToGalleryHandler(e) {
         this.hideElement(this.locators.userData);
-        this.showElement(this.gallery.locators.galleryView);
+        this.showElement(this.locators.galleryView);
     }
 
     goToUserHandler(e) {
-        this.hideElement(this.gallery.locators.galleryView);
+        this.hideElement(this.locators.galleryView);
         this.locators.userLogin.value = this.loginPwd.login;
         this.locators.userPassword.value = this.loginPwd.pwd;
         this.showElement(this.locators.userData);
     }
 
     galleryInitDisplay() {
+        this.hideElement(this.locators.nav);
         if (this.isLoggedIn() === "true") {
             this.showGallery();
         }

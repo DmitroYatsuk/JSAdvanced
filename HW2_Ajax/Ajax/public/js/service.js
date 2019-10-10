@@ -1,7 +1,17 @@
 'use strict';
 class Service {
-	constructor() {
 
+	showPage(pageName, pages) {
+		pages.forEach(element => {
+			if (element.id === pageName) {
+				element.classList.remove("hide");
+				element.classList.add("show");
+			}
+			else {
+				element.classList.remove("show");
+				element.classList.add("hide");
+			}
+		});
 	}
 
 	shrinkString(str) {
