@@ -26,23 +26,7 @@
         } */
 
         //reverted logic
-        isTrue(login, pwd) {
-            if (login == "" || pwd == "") {
-                return { status: false, msg: "Login and password shouldn't be empty!" };
-            }
-            if (!this.validateEmail(login)) {
-                return { status: false, msg: "Wrong login format!" };
-            }
-            if (!pwd.length >= 8) {
-                return { status: false, msg: "Password is too short!" };
-            }
-            else this.model.fetchCredentials().then(data => {
-                if (data.login === login && data.pwd === pwd) {
-                    return { status: true, msg: "Login has been done!" };
-                }
-                else return { status: false, msg: "Wrong credentials!" };
-            });
-        }
+
     }
 
     window.app = window.app || {};

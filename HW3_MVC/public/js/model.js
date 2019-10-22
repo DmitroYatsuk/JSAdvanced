@@ -31,8 +31,9 @@
         }
 
         fetchCredentials() {
-            fetch(`http://localhost:3000/user`)
-                .then(response => response.json());
+            fetch(`http://localhost:3000/user/`)
+                .then(response => response.json())
+                .then(data => { return data; });
         }
 
         mapData(data) {
@@ -64,7 +65,7 @@
         getRawData(id) {
             this.fetchData(id, null, this.setInputValues.bind(this));
         }
-    
+
         updateItem(data) {
             let options = this.model.getOptionData("PUT", data);
             this.model.fetchData(data.id, options, this.prepareSourceData.bind(this));
