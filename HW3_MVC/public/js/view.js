@@ -29,14 +29,20 @@
                 galleryBtn: document.getElementById("btn-gallery"),
                 aboutUserBtn: document.getElementById("about-user"),
                 nav: document.getElementById("navigation"),
-                showPwdBtn: document.getElementById("showPwd")
+                showPwdBtn: document.getElementById("showPwd"),
+                formHeader: document.getElementById("form-header"),
+                url: document.getElementById("url"),
+                name: document.getElementById("name"),
+                id: document.getElementById("id"),
+                description: document.getElementById("description"),
+                date: document.getElementById("date")
             };
+
             this.pages = [this.locators.galleryView, this.locators.formView];
             this.ready = false;
         }
 
         init() {
-            //this.initListeners();
             this.galleryInitDisplay();
             this.ready = true;
         }
@@ -87,32 +93,53 @@
         }
 
         showGallery() {
-            service.showPage("gallery-view");
-/*             this.hideAlert();
-            this.hideElement(this.locators.formSignin);
-            this.showElement(this.locators.galleryView);
-            this.showElement(this.locators.nav); */
-            this.gallery.initComponent();
-            this.user.initComponent();
+            this.showPage("gallery-view");
+            /*             this.hideAlert();
+                        this.hideElement(this.locators.formSignin);
+                        this.showElement(this.locators.galleryView);
+                        this.showElement(this.locators.nav); */
+            //this.gallery.initComponent();
+            //this.user.initComponent();
 
         }
 
         setLoggedIn(value) {
             sessionStorage.setItem('loggedIn', value);
         }
-    
+
         isLoggedIn() {
             return sessionStorage.getItem('loggedIn');
         }
-    
+
         setRememberMe(value) {
             localStorage.setItem('remMe', value);
         }
-    
+
         isRememberMe() {
             return localStorage.getItem('remMe');
         }
 
+        setInputValues(data) {
+            this.url.value = data.url;
+            this.name.value = data.name;
+            this.id.value = data.id;
+            this.description.value = data.description;
+            this.date.value = data.date;
+        }
+
+        getInputValues() {
+            return {
+                url: this.url.value,
+                name: this.name.value,
+                id: this.id.value,
+                description: this.description.value,
+                date: +this.date.value
+            }
+        }
+
+        isReady() {
+            return this.ready;
+        }
     }
 
     window.app = window.app || {};
