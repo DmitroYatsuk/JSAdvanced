@@ -31,9 +31,11 @@
         }
 
         fetchCredentials() {
-            fetch(`http://localhost:3000/user/`)
+            return fetch(`http://localhost:3000/user/`)
                 .then(response => response.json())
-                .then(data => { return data; });
+                .then(data => {
+                    return data;
+                });
         }
 
         mapData(data) {

@@ -29,30 +29,33 @@
         submitHandler(e) {
             e.preventDefault();
             let retVal = this.isUserLogined(this.view.locators.loginInput.value, this.view.locators.passwordInput.value);
-
-            if (retVal.status === true) {
-                this.view.setLoggedIn(true);
-                if (this.view.locators.rememberMe.checked === true) {
-                    this.view.setRememberMe(true);
+            retVal.then(data => {
+                if (data.status === false) {
+                    this.view.showAlert(data.msg);
                 }
-                else this.view.setRememberMe(false);
-                this.view.showGallery();
-            }
-            else this.view.showAlert(retVal.msg);
+                else {
+                    this.view.setLoggedIn(true);
+                    if (this.view.locators.rememberMe.checked === true) {
+                        this.view.setRememberMe(true);
+                    }
+                    else this.view.setRememberMe(false);
+                    this.view.showGallery();
+                }
+            });
         }
 
         isUserLogined(login, pwd) {
             if (login == "" || pwd == "") {
-                return { status: false, msg: "Login and password shouldn't be empty!" };
+                return Promise.resolve({ status: false, msg: "Login and password shouldn't be empty!" });
             }
             if (!this.validator.validateEmail(login)) {
-                return { status: false, msg: "Wrong login format!" };
+                return Promise.resolve({ status: false, msg: "Wrong login format!" });
             }
-            if (!pwd.length >= 8) {
-                return { status: false, msg: "Password is too short!" };
+            if (pwd.length < 8) {
+                return Promise.resolve({ status: false, msg: "Password is too short!" });
             }
             else {
-                this.model.fetchCredentials().then(data => {
+                return this.model.fetchCredentials().then(data => {
                     if (data.login === login && data.pwd === pwd) {
                         return { status: true, msg: "Login has been done!" };
                     }
