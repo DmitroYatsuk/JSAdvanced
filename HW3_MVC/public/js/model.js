@@ -31,10 +31,10 @@
         }
 
         fetchCredentials() {
-            return fetch(`http://localhost:3000/user/`)
+            return fetch(this.url)
                 .then(response => response.json())
                 .then(data => {
-                    return data;
+                    return data.user;
                 });
         }
 
@@ -72,9 +72,9 @@
             let options = this.model.getOptionData("PUT", data);
             this.model.fetchData(data.id, options, this.prepareSourceData.bind(this));
         }
-
+//ToDo: replace callback fn call in fetchData()
         prepareSourceData() {
-            this.model.fetchData("", null, this.mapData.bind(this));
+            this.fetchData("", null, this.mapData.bind(this));
         }
 
         saveData(data) {
