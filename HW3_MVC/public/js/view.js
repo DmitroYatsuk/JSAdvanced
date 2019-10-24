@@ -3,6 +3,7 @@
     class View {
         constructor() {
             this.locators = {
+                loginView: document.getElementById("form-login"),
                 galleryView: document.getElementById("gallery-view"),
                 dropdownName: document.getElementById("dropdown-name"),
                 dropdownDate: document.getElementById("dropdown-date"),
@@ -21,7 +22,6 @@
                 alert: document.getElementById("alert"),
                 rememberMe: document.getElementById("checkbox"),
                 submitBtn: document.getElementById("submit"),
-                formSignin: document.getElementById("form-view"),
                 quitBtn: document.getElementById("sign-out"),
                 userData: document.getElementById("userData"),
                 userLogin: document.getElementById("userLogin"),
@@ -38,7 +38,7 @@
                 date: document.getElementById("date")
             };
 
-            this.pages = [this.locators.galleryView, this.locators.formView];
+            this.pages = [this.locators.galleryView, this.locators.loginView];
             this.ready = false;
         }
 
@@ -92,15 +92,38 @@
             });
         }
 
-        showGallery() {
+        showGallery(arrToDisplay) {
             this.showPage("gallery-view");
-            /*             this.hideAlert();
-                        this.hideElement(this.locators.formSignin);
-                        this.showElement(this.locators.galleryView);
-                        this.showElement(this.locators.nav); */
-            //this.gallery.initComponent();
-            //this.user.initComponent();
+            this.showResult(arrToDisplay);
+        }
 
+        showResult(arrToDisplay) {
+            let resultHTML = "";
+            arrToDisplay.forEach(function (car) {
+                resultHTML += `
+                                <div class="col-md-4">
+                                    <div class="card mb-4 box-shadow">
+                                    <img class="card-img-top"
+                                        data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail" alt="${car.name}"
+                                        src="${car.url}" data-holder-rendered="true"
+                                        style="height: 225px; width: 100%; display: block;">
+                                    <div class="card-body">
+                                        <p class="card-text">${car.name}</p>
+                                        <p class="card-text">${car.description}</p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-outline-secondary" data-view-btn="${car.id}">View</button>
+                                            <button type="button" class="btn btn-outline-secondary" data-edit-btn="${car.id}">Edit</button>
+                                        </div>
+                                        <a href="#" class="btn btn-danger" data-rm-btn="${car.id}">Удалить</a>
+                                        <small class="text-muted">${car.date}</small>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>`;
+            }
+            )
+            this.view.locators.result.innerHTML = resultHTML;
         }
 
         setLoggedIn(value) {
