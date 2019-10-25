@@ -5,7 +5,6 @@
             this.model = model;
             this.view = view;
             this.validator = validator;
-            this.arrToDisplay = [];
         }
 
         initListeners() {
@@ -22,14 +21,14 @@
             this.view.locators.createBtn.addEventListener("click", this.createBtnHandler.bind(this));
             this.view.locators.updateBtn.addEventListener("click", this.updateBtnHandler.bind(this));
             //this.view.locators.result.addEventListener("click", this.viewFormBtnHandler.bind(this));
-            //this.view.locators.result.addEventListener("click", this.editFormBtnHandler.bind(this));
-            //this.view.locators.result.addEventListener("click", this.removeBtnHandler.bind(this));
+            this.view.locators.result.addEventListener("click", this.editFormBtnHandler.bind(this));
+            this.view.locators.result.addEventListener("click", this.removeBtnHandler.bind(this));
         }
 
         submitHandler(e) {
             e.preventDefault();
-            let retVal = this.isUserLogined(this.view.locators.loginInput.value, this.view.locators.passwordInput.value);
-            retVal.then(data => {
+            this.isUserLogined(this.view.locators.loginInput.value, this.view.locators.passwordInput.value)
+            .then(data => {
                 if (data.status === false) {
                     this.view.showAlert(data.msg);
                 }
@@ -39,7 +38,7 @@
                         this.view.setRememberMe(true);
                     }
                     else this.view.setRememberMe(false);
-                    this.view.showGallery(this.arrToDisplay);
+                    this.view.showGallery(this.model.getArrData());
                 }
             });
         }
@@ -67,25 +66,21 @@
         quitBtnHandler(e) {
             this.view.locators.loginInput.value = "";
             this.view.locators.passwordInput.value = "";
-            this.view.showPage("formSignin");
-            /*             this.showElement(this.view.locators.formSignin);
-                        this.hideElement(this.view.locators.userData);
-                        this.hideElement(this.view.locators.galleryView); */
+            this.view.showPage("form-login");
             this.view.setLoggedIn(false);
             this.view.setRememberMe(false);
         }
 
         goToGalleryHandler(e) {
-            /*             this.hideElement(this.view.locators.userData);
-                        this.showElement(this.view.locators.galleryView); */
-            this.view.showPage("galleryView");
+            this.view.showPage("gallery-view");
         }
 
         goToUserHandler(e) {
-            this.view.locators.userLogin.value = this.loginPwd.login;
-            this.view.locators.userPassword.value = this.loginPwd.pwd;
-            /*             this.hideElement(this.view.locators.galleryView);
-                        this.showElement(this.view.locators.userData); */
+            this.model.fetchCredentials()
+            .then(data => {
+                this.view.locators.userLogin.value =  data.login;
+                this.view.locators.userPassword.value = data.password;
+            });
             this.view.showPage("userData");
         }
 
@@ -104,40 +99,8 @@
         }
 
         filterHandler(e) {
-            this.filterCards(e.target.id);
-            this.showResult();
-        }
-
-        setFilterType(filterValue) {
-            localStorage.setItem('filter', filterValue);
-        }
-
-        getFilterType() {
-            let filterValue = localStorage.getItem('filter');
-            if (filterValue === null) {
-                this.setFilterType("dropdown-1");
-                return "dropdown-1";
-            }
-            else return filterValue;
-
-        }
-
-        filterCards(filterValue) {
-            this.setFilterType(filterValue);
-            switch (filterValue) {
-                case "dropdown-1":
-                    this.arrToDisplay.sort((a, b) => a.name.localeCompare(b.name));
-                    return;
-                case "dropdown-2":
-                    this.arrToDisplay.sort((a, b) => b.name.localeCompare(a.name));
-                    return;
-                case "dropdown-3":
-                    this.arrToDisplay.sort((a, b) => b.date.localeCompare(a.date));
-                    return;
-                case "dropdown-4":
-                    this.arrToDisplay.sort((a, b) => a.date.localeCompare(b.date));
-                    return;
-            }
+            this.model.filterCards(e.target.id);
+            this.view.showResult(this.model.getArrData());
         }
 
         createBtnHandler(e) {
@@ -175,19 +138,15 @@
             this.model.deleteItem(e.target.attributes["data-rm-btn"].nodeValue);
         }
 
-        initView(data) {
-            if (!this.view.isReady()) {
-                this.view.init(data);
-            }
-        }
-
         init() {
             this.model.prepareSourceData()
                 .then(() => {
-                    this.initView();
+                    this.view.init();
                     this.initListeners();
-                }
-                );
+                    this.view.showPage("form-login");                 
+                    //this.filterCards(this.getFilterType());
+                    //this.view.showResult();
+                });
 
         }
     }

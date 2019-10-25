@@ -38,23 +38,27 @@
                 date: document.getElementById("date")
             };
 
-            this.pages = [this.locators.galleryView, this.locators.loginView];
+            this.pages = [this.locators.galleryView, this.locators.loginView, this.locators.userData];
             this.ready = false;
         }
 
         init() {
-            this.galleryInitDisplay();
-            this.ready = true;
+            if (!this.isReady()) {
+                this.ready = true;
+                this.hideElement(this.locators.nav);
+            }
+            else this.showElement(this.locators.nav);
+            //this.galleryInitDisplay();
         }
 
         galleryInitDisplay() {
             this.hideElement(this.locators.nav);
-            if (this.isLoggedIn() === "true") {
-                this.showGallery();
+              if (this.isLoggedIn() === "true") {
+                this.showGallery(arrToDisplay);
             }
             if (this.isRememberMe() === "true") {
-                this.showGallery();
-            }
+                this.showGallery(arrToDisplay);
+            }  
         }
 
         showAlert(msg) {
@@ -123,7 +127,7 @@
                                 </div>`;
             }
             )
-            this.view.locators.result.innerHTML = resultHTML;
+            this.locators.result.innerHTML = resultHTML;
         }
 
         setLoggedIn(value) {

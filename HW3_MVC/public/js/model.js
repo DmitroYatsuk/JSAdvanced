@@ -3,6 +3,7 @@
     class Model {
         constructor(url) {
             this.url = url;
+            this.arrToDisplay = [];
         }
 
         shrinkString(str) {
@@ -11,13 +12,21 @@
                 : str;
         }
 
-
-        fetchData(id, options, fn) {
-            fetch(`http://localhost:3000/cars/${id}`, options)
-                .then(response => response.json())
+        getRawData(id) {
+            this.fetchData(id, null)
+            .then(data => this.setInputValues(data));
+        }
+        
+        prepareSourceData() {
+            return this.fetchData("", null)
                 .then(data => {
-                    fn(data);
+                    this.mapData(data);
                 });
+        }
+
+        fetchData(id, options) {
+            return fetch(`http://localhost:3000/cars/${id}`, options)
+                .then(response => response.json());
         }
 
         getOptionData(reqType, bodyData) {
@@ -55,30 +64,24 @@
                     url: `http://${item.url}`,
                     name: item.name.charAt(0).toLocaleUpperCase() + `${item.name}`.slice(1).toLowerCase(),
                     id: item.id,
-                    description: this.model.shrinkString(item.description),
+                    description: this.shrinkString(item.description),
                     date: moment(item.date).format("YYYY/MM/DD HH:mm"),
                 }
             })
-            this.saveData(mappedArr);
-            this.filterCards(this.getFilterType());
-            this.showResult();
-        }
-
-        getRawData(id) {
-            this.fetchData(id, null, this.setInputValues.bind(this));
+            this.saveArrData(mappedArr);
         }
 
         updateItem(data) {
             let options = this.model.getOptionData("PUT", data);
             this.model.fetchData(data.id, options, this.prepareSourceData.bind(this));
         }
-//ToDo: replace callback fn call in fetchData()
-        prepareSourceData() {
-            this.fetchData("", null, this.mapData.bind(this));
+
+        saveArrData(data) {
+            this.arrToDisplay = data;
         }
 
-        saveData(data) {
-            this.arrToDisplay = data;
+        getArrData() {
+            return this.arrToDisplay
         }
 
         createItem(data) {
@@ -91,6 +94,37 @@
             this.model.fetchData(id, options, this.prepareSourceData.bind(this));
         }
 
+        setFilterType(filterValue) {
+            localStorage.setItem('filter', filterValue);
+        }
+
+        getFilterType() {
+            let filterValue = localStorage.getItem('filter');
+            if (filterValue === null) {
+                this.setFilterType("dropdown-1");
+                return "dropdown-1";
+            }
+            else return filterValue;
+
+        }
+
+        filterCards(filterValue) {
+            this.setFilterType(filterValue);
+            switch (filterValue) {
+                case "dropdown-1":
+                    this.arrToDisplay.sort((a, b) => a.name.localeCompare(b.name));
+                    return;
+                case "dropdown-2":
+                    this.arrToDisplay.sort((a, b) => b.name.localeCompare(a.name));
+                    return;
+                case "dropdown-3":
+                    this.arrToDisplay.sort((a, b) => b.date.localeCompare(a.date));
+                    return;
+                case "dropdown-4":
+                    this.arrToDisplay.sort((a, b) => a.date.localeCompare(b.date));
+                    return;
+            }
+        }
     }
 
     window.app = window.app || {};
