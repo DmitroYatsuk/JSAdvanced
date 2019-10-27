@@ -53,7 +53,7 @@ body {
   height: 100%;
 }
 
-.form-create,
+.form-crud,
 .form-edit {
   width: 100%;
   max-width: 640px;

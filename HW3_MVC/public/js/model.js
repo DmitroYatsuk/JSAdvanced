@@ -12,10 +12,10 @@
                 : str;
         }
 
-        getRawData(id) {
+/*         getRawData(id) {
             this.fetchData(id, null)
-            .then(data => this.setInputValues(data));
-        }
+            
+        } */
         
         prepareSourceData() {
             return this.fetchData("", null)
@@ -24,7 +24,7 @@
                 });
         }
 
-        fetchData(id, options) {
+        fetchData(id, options = null) {
             return fetch(`http://localhost:3000/cars/${id}`, options)
                 .then(response => response.json());
         }
@@ -68,30 +68,33 @@
                     date: moment(item.date).format("YYYY/MM/DD HH:mm"),
                 }
             })
-            this.saveArrData(mappedArr);
+            this.saveData(mappedArr);
         }
-
-        updateItem(data) {
-            let options = this.model.getOptionData("PUT", data);
-            this.model.fetchData(data.id, options, this.prepareSourceData.bind(this));
-        }
-
-        saveArrData(data) {
-            this.arrToDisplay = data;
-        }
-
-        getArrData() {
-            return this.arrToDisplay
-        }
-
+        
         createItem(data) {
-            let options = this.model.getOptionData("POST", data);
-            this.model.fetchData("", options, this.prepareSourceData.bind(this));
+            let options = this.getOptionData("POST", data);
+            this.fetchData("", options)
+            .then(() => this.prepareSourceData());
         }
 
         deleteItem(id) {
-            let options = this.model.getOptionData("DELETE");
-            this.model.fetchData(id, options, this.prepareSourceData.bind(this));
+            let options = this.getOptionData("DELETE");
+            this.fetchData(id, options)
+            .then(() => this.prepareSourceData());
+        }
+
+        updateItem(data) {
+            let options = this.getOptionData("PUT", data);
+            this.fetchData(data.id, options)
+            .then(() => this.prepareSourceData());
+        }
+
+        saveData(data) {
+            this.arrToDisplay = data;
+        }
+
+        getStoredData() {
+            return this.arrToDisplay;
         }
 
         setFilterType(filterValue) {

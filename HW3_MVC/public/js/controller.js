@@ -38,7 +38,7 @@
                         this.view.setRememberMe(true);
                     }
                     else this.view.setRememberMe(false);
-                    this.view.showGallery(this.model.getArrData());
+                    this.view.showGallery(this.model.getStoredData());
                 }
             });
         }
@@ -67,6 +67,7 @@
             this.view.locators.loginInput.value = "";
             this.view.locators.passwordInput.value = "";
             this.view.showPage("form-login");
+            this.view.hideElement(this.view.locators.nav);
             this.view.setLoggedIn(false);
             this.view.setRememberMe(false);
         }
@@ -95,40 +96,42 @@
             /* this.view.hideElement(this.view.locators.galleryView);
             this.view.hideElement(this.view.locators.updateBtn);
             this.view.showElement(this.view.locators.createForm); */
-            this.view.showPage("createForm");
+            this.view.showPage("form-create");
         }
 
         filterHandler(e) {
             this.model.filterCards(e.target.id);
-            this.view.showResult(this.model.getArrData());
+            this.view.showResult(this.model.getStoredData());
         }
 
         createBtnHandler(e) {
             this.model.createItem(this.getInputValues());
             /*             this.view.hideElement(this.view.locators.createForm);
                         this.view.showElement(this.view.locators.galleryView); */
-            this.view.showPage("");
+            this.view.showPage("gallery-view");
         }
 
         updateBtnHandler(e) {
             this.model.updateItem(this.getInputValues());
             /* this.view.hideElement(this.view.locators.createForm);
             this.view.showElement(this.view.locators.galleryView); */
-            this.view.showPage("");
+            this.view.showPage("gallery-view");
         }
 
         editFormBtnHandler(e) {
             if (!e.target.attributes["data-edit-btn"]) {
                 return;
             }
-            this.view.formHeader.innerHTML = "Edit element form";
-            this.model.getRawData(e.target.attributes["data-edit-btn"].nodeValue);
+            this.view.locators.formHeader.innerHTML = "Edit element form";
+            //this.model.getRawData(e.target.attributes["data-edit-btn"].nodeValue);
+            this.model.fetchData(e.target.attributes["data-edit-btn"].nodeValue)
+            .then(data => this.view.setInputValues(data));
             /* 
             this.view.hideElement(this.view.locators.galleryView);
             this.view.showElement(this.view.locators.createForm); */
             this.view.showElement(this.view.locators.updateBtn);
             this.view.hideElement(this.view.locators.createBtn);
-            this.view.showPage("createForm");
+            this.view.showPage("form-create");
         }
 
         removeBtnHandler(e) {
@@ -136,16 +139,15 @@
                 return;
             }
             this.model.deleteItem(e.target.attributes["data-rm-btn"].nodeValue);
+            this.view.showResult(this.model.getStoredData());
         }
 
         init() {
             this.model.prepareSourceData()
                 .then(() => {
-                    this.view.init();
-                    this.initListeners();
-                    this.view.showPage("form-login");                 
-                    //this.filterCards(this.getFilterType());
-                    //this.view.showResult();
+                    this.model.filterCards(this.model.getFilterType());
+                    this.view.init(this.model.getStoredData());
+                    this.initListeners();              
                 });
 
         }

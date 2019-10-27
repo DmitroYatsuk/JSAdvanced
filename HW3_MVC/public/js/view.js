@@ -38,27 +38,28 @@
                 date: document.getElementById("date")
             };
 
-            this.pages = [this.locators.galleryView, this.locators.loginView, this.locators.userData];
+            this.pages = [this.locators.galleryView, this.locators.loginView,
+                 this.locators.userData, this.locators.createForm];
             this.ready = false;
         }
 
-        init() {
-            if (!this.isReady()) {
+        init(arrToDisplay) {
+/*             if (!this.isReady()) {
                 this.ready = true;
                 this.hideElement(this.locators.nav);
             }
-            else this.showElement(this.locators.nav);
-            //this.galleryInitDisplay();
+            else this.showElement(this.locators.nav); */
+            this.galleryInitDisplay(arrToDisplay);
         }
 
-        galleryInitDisplay() {
-            this.hideElement(this.locators.nav);
-              if (this.isLoggedIn() === "true") {
+        galleryInitDisplay(arrToDisplay) {
+            if (this.isLoggedIn() === "true" || this.isRememberMe() === "true") {
                 this.showGallery(arrToDisplay);
             }
-            if (this.isRememberMe() === "true") {
-                this.showGallery(arrToDisplay);
-            }  
+            else {
+                this.hideElement(this.locators.nav);
+                this.showPage("form-login");
+            } 
         }
 
         showAlert(msg) {
@@ -97,6 +98,7 @@
         }
 
         showGallery(arrToDisplay) {
+            this.showElement(this.locators.nav);
             this.showPage("gallery-view");
             this.showResult(arrToDisplay);
         }
@@ -147,20 +149,20 @@
         }
 
         setInputValues(data) {
-            this.url.value = data.url;
-            this.name.value = data.name;
-            this.id.value = data.id;
-            this.description.value = data.description;
-            this.date.value = data.date;
+            this.locators.url.value = data.url;
+            this.locators.name.value = data.name;
+            this.locators.id.value = data.id;
+            this.locators.description.value = data.description;
+            this.locators.date.value = data.date;
         }
 
         getInputValues() {
             return {
-                url: this.url.value,
-                name: this.name.value,
-                id: this.id.value,
-                description: this.description.value,
-                date: +this.date.value
+                url: this.locators.url.value,
+                name: this.locators.name.value,
+                id: this.locators.id.value,
+                description: this.locators.description.value,
+                date: +this.locators.date.value
             }
         }
 
