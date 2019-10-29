@@ -69,6 +69,8 @@
                 }
             })
             this.saveData(mappedArr);
+            this.filterCards(this.getFilterType());
+		    //this.showResult();
         }
         
         createItem(data) {

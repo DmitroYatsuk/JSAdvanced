@@ -112,10 +112,13 @@
         }
 
         updateBtnHandler(e) {
-            this.model.updateItem(this.getInputValues());
+            this.model.updateItem(this.view.getInputValues());
             /* this.view.hideElement(this.view.locators.createForm);
             this.view.showElement(this.view.locators.galleryView); */
-            this.view.showPage("gallery-view");
+            
+//ToDo: Replace showGalllery()  by showPage() or vice versa
+            //this.view.showPage("gallery-view");
+            this.view.showGallery();
         }
 
         editFormBtnHandler(e) {

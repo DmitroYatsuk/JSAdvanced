@@ -96,7 +96,7 @@
                 }
             });
         }
-
+//ToDo: Replace showGalllery()  by showPage() or vice versa
         showGallery(arrToDisplay) {
             this.showElement(this.locators.nav);
             this.showPage("gallery-view");
