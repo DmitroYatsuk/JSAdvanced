@@ -70,7 +70,6 @@
             })
             this.saveData(mappedArr);
             this.filterCards(this.getFilterType());
-		    //this.showResult();
         }
         
         createItem(data) {
@@ -87,7 +86,7 @@
 
         updateItem(data) {
             let options = this.getOptionData("PUT", data);
-            this.fetchData(data.id, options)
+            return this.fetchData(data.id, options)
             .then(() => this.prepareSourceData());
         }
 

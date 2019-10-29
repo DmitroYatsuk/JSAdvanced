@@ -112,29 +112,17 @@
         }
 
         updateBtnHandler(e) {
-            this.model.updateItem(this.view.getInputValues());
-            /* this.view.hideElement(this.view.locators.createForm);
-            this.view.showElement(this.view.locators.galleryView); */
-            
-//ToDo: Replace showGalllery()  by showPage() or vice versa
-            //this.view.showPage("gallery-view");
-            this.view.showGallery();
+            this.model.updateItem(this.view.getInputValues())
+            .then(() => this.view.showGallery(this.model.getStoredData()));
         }
 
         editFormBtnHandler(e) {
             if (!e.target.attributes["data-edit-btn"]) {
                 return;
             }
-            this.view.locators.formHeader.innerHTML = "Edit element form";
-            //this.model.getRawData(e.target.attributes["data-edit-btn"].nodeValue);
             this.model.fetchData(e.target.attributes["data-edit-btn"].nodeValue)
             .then(data => this.view.setInputValues(data));
-            /* 
-            this.view.hideElement(this.view.locators.galleryView);
-            this.view.showElement(this.view.locators.createForm); */
-            this.view.showElement(this.view.locators.updateBtn);
-            this.view.hideElement(this.view.locators.createBtn);
-            this.view.showPage("form-create");
+            this.view.showEditPage();
         }
 
         removeBtnHandler(e) {

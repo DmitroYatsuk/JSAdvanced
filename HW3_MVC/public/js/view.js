@@ -54,7 +54,10 @@
 
         galleryInitDisplay(arrToDisplay) {
             if (this.isLoggedIn() === "true" || this.isRememberMe() === "true") {
-                this.showGallery(arrToDisplay);
+                //this.showGallery(arrToDisplay); OR?
+                this.showElement(this.locators.nav);
+                this.showPage("gallery-view");
+                this.showResult(arrToDisplay);
             }
             else {
                 this.hideElement(this.locators.nav);
@@ -101,6 +104,20 @@
             this.showElement(this.locators.nav);
             this.showPage("gallery-view");
             this.showResult(arrToDisplay);
+        }
+
+        showEditPage() {
+            this.locators.formHeader.innerHTML = "Edit form";
+            this.showElement(this.locators.updateBtn);
+            this.hideElement(this.locators.createBtn);
+            this.showPage("form-create");
+        }
+
+        showCreatePage() {
+            this.locators.formHeader.innerHTML = "Update form";
+            this.showElement(this.locators.createBtn);
+            this.hideElement(this.locators.updateBtn);
+            this.showPage("form-create");
         }
 
         showResult(arrToDisplay) {
