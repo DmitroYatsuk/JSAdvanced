@@ -93,10 +93,6 @@
         }
 
         addBtnHandler(e) {
-            /* this.view.hideElement(this.view.locators.galleryView);
-            this.view.hideElement(this.view.locators.updateBtn);
-            this.view.showElement(this.view.locators.createForm); */
-            //this.view.showPage("form-create");
             this.view.showCreatePage();
         }
 

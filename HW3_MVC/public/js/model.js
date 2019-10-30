@@ -69,13 +69,13 @@
         
         createItem(data) {
             let options = this.getOptionData("POST", data);
-            return this.fetchData("", options)
+            this.fetchData("", options)
             .then(() => this.prepareSourceData());
         }
 
         deleteItem(id) {
             let options = this.getOptionData("DELETE");
-            return this.fetchData(id, options)
+            this.fetchData(id, options)
             .then(() => this.prepareSourceData());
         }
 
