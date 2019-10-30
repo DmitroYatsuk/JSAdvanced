@@ -135,7 +135,7 @@
         init() {
             this.model.prepareSourceData()
                 .then(() => {
-                    this.model.filterCards(this.model.getFilterType());
+                    //ToDo: Replace getStoredData() and arrToDisplay by callback data
                     this.view.init(this.model.getStoredData());
                     this.initListeners();              
                 });
