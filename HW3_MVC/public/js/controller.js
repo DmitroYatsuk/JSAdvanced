@@ -96,7 +96,8 @@
             /* this.view.hideElement(this.view.locators.galleryView);
             this.view.hideElement(this.view.locators.updateBtn);
             this.view.showElement(this.view.locators.createForm); */
-            this.view.showPage("form-create");
+            //this.view.showPage("form-create");
+            this.view.showCreatePage();
         }
 
         filterHandler(e) {
@@ -105,10 +106,8 @@
         }
 
         createBtnHandler(e) {
-            this.model.createItem(this.getInputValues());
-            /*             this.view.hideElement(this.view.locators.createForm);
-                        this.view.showElement(this.view.locators.galleryView); */
-            this.view.showPage("gallery-view");
+            this.model.createItem(this.view.getInputValues())
+            .then(() => this.view.showGallery(this.model.getStoredData()));
         }
 
         updateBtnHandler(e) {
@@ -129,8 +128,8 @@
             if (!e.target.attributes["data-rm-btn"]) {
                 return;
             }
-            this.model.deleteItem(e.target.attributes["data-rm-btn"].nodeValue);
-            this.view.showResult(this.model.getStoredData());
+            this.model.deleteItem(e.target.attributes["data-rm-btn"].nodeValue)
+            .then(() => this.view.showGallery(this.model.getStoredData()));
         }
 
         init() {
