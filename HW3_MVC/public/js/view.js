@@ -54,10 +54,7 @@
 
         galleryInitDisplay(arrToDisplay) {
             if (this.isLoggedIn() === "true" || this.isRememberMe() === "true") {
-                //this.showGallery(arrToDisplay); OR?
-                this.showElement(this.locators.nav);
-                this.showPage("gallery-view");
-                this.showResult(arrToDisplay);
+                this.showGallery(arrToDisplay);
             }
             else {
                 this.hideElement(this.locators.nav);
