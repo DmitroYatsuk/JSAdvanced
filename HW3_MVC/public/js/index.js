@@ -1,6 +1,6 @@
 (function() {
 
-    let url = 'https://gist.githubusercontent.com/DmitroYatsuk/7739a7e4097efe82682d4390b7df2321/raw/5c4575af4434c4e569ab7a47dc12748dec38dc80/phones.json';
+    let url = 'https://gist.githubusercontent.com/DmitroYatsuk/7739a7e4097efe82682d4390b7df2321/raw/fc5f353377f0daa3fefcd28002613561756de75f/cars.json';
 
     let validator = new window.app.Validator();
     let model = new window.app.Model(url);
