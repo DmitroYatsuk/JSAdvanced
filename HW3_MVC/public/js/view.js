@@ -43,15 +43,6 @@
             this.ready = false;
         }
 
-        init(arrToDisplay) {
-/*             if (!this.isReady()) {
-                this.ready = true;
-                this.hideElement(this.locators.nav);
-            }
-            else this.showElement(this.locators.nav); */
-            this.galleryInitDisplay(arrToDisplay);
-        }
-
         galleryInitDisplay(arrToDisplay) {
             if (this.isLoggedIn() === "true" || this.isRememberMe() === "true") {
                 this.showGallery(arrToDisplay);
@@ -180,9 +171,6 @@
             }
         }
 
-        isReady() {
-            return this.ready;
-        }
     }
 
     window.app = window.app || {};

@@ -38,7 +38,8 @@
                         this.view.setRememberMe(true);
                     }
                     else this.view.setRememberMe(false);
-                    this.view.showGallery(this.model.getStoredData());
+                    this.model.prepareSourceData()
+                    .then(data => this.view.showGallery(data));
                 }
             });
         }
@@ -98,17 +99,17 @@
 
         filterHandler(e) {
             this.model.filterCards(e.target.id);
-            this.view.showResult(this.model.getStoredData());
+            this.view.showResult(data);
         }
 
         createBtnHandler(e) {
             this.model.createItem(this.view.getInputValues())
-            .then(() => this.view.showGallery(this.model.getStoredData()));
+            .then(data => this.view.showGallery(data));
         }
 
         updateBtnHandler(e) {
             this.model.updateItem(this.view.getInputValues())
-            .then(() => this.view.showGallery(this.model.getStoredData()));
+            .then(data => this.view.showGallery(data));
         }
 
         editFormBtnHandler(e) {
@@ -125,18 +126,17 @@
                 return;
             }
             this.model.deleteItem(e.target.attributes["data-rm-btn"].nodeValue)
-            .then(() => this.view.showGallery(this.model.getStoredData()));
+            .then(data => this.view.showGallery(data));
         }
 
         init() {
             this.model.prepareSourceData()
-                .then(() => {
-                    //ToDo: Replace getStoredData() and arrToDisplay by callback data
-                    this.view.init(this.model.getStoredData());
+                .then(data => {
+                    this.view.galleryInitDisplay(data);
                     this.initListeners();              
                 });
-
         }
+
     }
 
     window.app = window.app || {};
