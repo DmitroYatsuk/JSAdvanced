@@ -1,7 +1,7 @@
 (function() {
-    let main = document.querySelector("#main-view");
-    let info = document.querySelector("#info-view");
-    let login = document.querySelector("#login-view");
+    let main = document.querySelector("#gallery-view");
+    let info = document.querySelector("#userData");
+    let login = document.querySelector("#form-login");
     let utils = window.app.Utils;
     let activatedRoutes = {};
 
